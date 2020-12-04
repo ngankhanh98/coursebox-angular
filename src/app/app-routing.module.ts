@@ -11,7 +11,6 @@ import {
 
 export const routes: Routes = [
   {
-    // path: "pages",
     path: "dashboard",
     loadChildren: () =>
       import("./pages/pages.module").then((m) => m.PagesModule),
@@ -54,10 +53,6 @@ export const routes: Routes = [
     ],
   },
 
-  // {
-  //   path: "auth",
-  //   loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
-  // },
   { path: "", redirectTo: "pages", pathMatch: "full" },
   { path: "**", redirectTo: "pages" },
 ];

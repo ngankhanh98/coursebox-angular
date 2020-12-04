@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { PagesComponent } from "./pages.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
-import { ExploreComponent } from './explore/explore.component';
+import { ExploreComponent } from "./explore/explore.component";
 
 const routes: Routes = [
   {
