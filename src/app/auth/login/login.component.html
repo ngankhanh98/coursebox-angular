@@ -1,0 +1,31 @@
+<h1>Welcome back.</h1>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" nbInput fullWidth placeholder="Username" formControlName="username">
+  </div>
+
+  <div>
+    <span class="label-with-link">
+      <label for="password">Password</label>
+      <a routerlink="../request-password" class="forgot-password caption-2" ng-reflect-router-link="../request-password"
+        href="/auth/request-password">Forgot Password?</a>
+    </span>
+    <input type="password" nbInput fullWidth placeholder="Password" formControlName="password">
+  </div>
+
+  <div class="form-control-group accept-group">
+    <nb-checkbox name="rememberMe" ng-reflect-name="rememberMe" class="status-basic ng-untouched ng-pristine ng-valid">
+      <label class="label">
+        <input type="checkbox" class="native-input visually-hidden">
+        <span class="text">Remember me</span>
+      </label>
+    </nb-checkbox>
+  </div>
+
+  <button type="submit" nbButton="" fullwidth status="primary" size="large" ng-reflect-status="primary"
+    ng-reflect-size="large" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+    class="appearance-filled full-width size-large status-primary shape-rectangle nb-transition">
+    Log In </button>
+
+</form>
