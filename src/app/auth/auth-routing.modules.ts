@@ -13,11 +13,6 @@ const routes: Routes = [
         path: "login",
         component: LoginComponent,
       },
-      // {
-      //   path: 'layout',
-      //   loadChildren: () => import('./layout/layout.module')
-      //     .then(m => m.LayoutModule),
-      // }
     ],
   },
 ];
