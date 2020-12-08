@@ -24,7 +24,7 @@ export class AuthService {
           token: response['accessToken'],
           isLoggedIn: true,
         });
-        console.log('response', response);
+        // console.log('response', response);
       });
   }
 }

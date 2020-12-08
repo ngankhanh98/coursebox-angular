@@ -4,7 +4,7 @@ export interface Auth {
   isLoggedIn: boolean;
 }
 
-export interface loginAuth {
+export interface LoginAuth {
   username: string;
   password: string;
 }

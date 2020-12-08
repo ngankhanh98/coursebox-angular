@@ -21,12 +21,13 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     const loginInfo = this.loginForm.value;
-    console.log('loginInfo', loginInfo);
+    // console.log('loginInfo', loginInfo);
     try {
       this.authService.onLogin(loginInfo);
       this.router.navigate(['/dashboard']);
     } catch (error) {
-      console.log('error', error);
+      // TODO: error handling
+      // console.log('error', error);
     }
   }
 }
