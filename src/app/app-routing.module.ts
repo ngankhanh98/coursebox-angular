@@ -55,7 +55,7 @@ export const routes: Routes = [
     ],
   },
 
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard/explore', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];
 

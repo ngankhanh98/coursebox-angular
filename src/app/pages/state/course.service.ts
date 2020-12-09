@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Course } from './course';
 import { CourseStore } from './course.store';
-import { arrayAdd } from '@datorama/akita';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
@@ -12,9 +11,11 @@ export class CourseService {
     // FIXME: not know if it works
     return this.http
       .get<Course[]>('http://localhost:3000/v1/course')
-      .subscribe((respone) => {
-        console.log(respone);
-        this.courseStore.add(respone);
+      .subscribe((res) => {
+        console.log('res', res);
+
+        // FIXME: only add the last res
+        this.courseStore.set(res);
       });
   }
 }
