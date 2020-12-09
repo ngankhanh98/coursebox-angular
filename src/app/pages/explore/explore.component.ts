@@ -17,14 +17,14 @@ export class ExploreComponent implements OnInit {
     private courseService: CourseService,
     private courseQuery: CourseQuery
   ) {}
-  
 
   ngOnInit(): void {
     this.getAllCourses();
     this.courseQuery.allBrowseCourses$.subscribe((arg) => {
-      console.log('arg', arg);
-    //   this.courses = arg;
+      // console.log('arg', arg);
+      //   this.courses = arg;
       this.courses = arg;
+      // console.log('this.courses', this.courses);
     });
   }
 
@@ -32,7 +32,6 @@ export class ExploreComponent implements OnInit {
     this.courseService.loadCourses();
   }
 }
-
 
 // without state
 // import { HttpClient } from '@angular/common/http';

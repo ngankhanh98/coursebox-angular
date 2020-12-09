@@ -12,7 +12,7 @@ export class CourseService {
     return this.http
       .get<Course[]>('http://localhost:3000/v1/course')
       .subscribe((res) => {
-        console.log('res', res);
+        // console.log('res', res);
 
         // FIXME: only add the last res
         this.courseStore.set(res);
