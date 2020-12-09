@@ -2,11 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthStore } from './auth.store';
 
-export interface Course {
-  title: string;
-  id: string;
-}
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(private http: HttpClient, private authStore: AuthStore) {}
@@ -24,7 +19,6 @@ export class AuthService {
           token: response['accessToken'],
           isLoggedIn: true,
         });
-        // console.log('response', response);
       });
   }
 }

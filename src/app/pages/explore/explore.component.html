@@ -1,1 +1,6 @@
-<ngx-course-card></ngx-course-card>
+
+<div class="row row-cols-1 row-cols-md-2 g-4" *ngFor="let course of courses">
+    <div class="col-md-5"  [id]='course.courseId'>
+        <ngx-course-card [title]='course.title'></ngx-course-card>
+    </div>
+</div>
