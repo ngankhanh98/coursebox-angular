@@ -1,13 +1,3 @@
-<!-- <div class="row row-cols-1 row-cols-md-2 g-4">
-    <div class="col-md-5">
-        <div *ngFor="let course of (courses)">
-            AAAA
-        </div>
-    </div>
-</div> -->
-
-<div *ngFor="let course of courses">
+<div *ngFor="let course of (courses$ | async )">
     {{course.courseId}} - {{course.title}}
 </div>
-
-<!-- <ngx-course-card [title]='course.title' *ngFor="let course of (courses$)"></ngx-course-card> -->
