@@ -12,11 +12,13 @@ import {
   NbSelectModule,
   NbIconModule,
   NbThemeModule,
+  NbCardModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
 import {
+  CardComponent,
   FooterComponent,
   HeaderComponent,
   SearchInputComponent,
@@ -52,6 +54,7 @@ const NB_MODULES = [
   NbSelectModule,
   NbIconModule,
   NbEvaIconsModule,
+  NbCardModule
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -61,6 +64,7 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  CardComponent
 ];
 const PIPES = [
   CapitalizePipe,

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExploreComponent } from './explore.component';
-import { CourseCardComponent } from './course-card/course-card/course-card.component';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbSpinnerModule } from '@nebular/theme';
+import { ThemeModule } from 'app/@theme/theme.module';
 
 @NgModule({
-  declarations: [ExploreComponent, CourseCardComponent],
-  imports: [CommonModule, NbCardModule],
+  declarations: [ExploreComponent],
+  imports: [CommonModule, NbCardModule, ThemeModule, NbSpinnerModule],
 })
 export class ExploreModule {}
