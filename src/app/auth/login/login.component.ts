@@ -19,16 +19,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-
   onLogin() {
-    const loginInfo = this.loginForm.value;
-    // console.log('loginInfo', loginInfo);
+    const { username, password } = this.loginForm.value;
     try {
-      this.authService.onLogin(loginInfo);
+      this.authService.onLogin({ username, password });
       this.router.navigate(['/dashboard']);
     } catch (error) {
       // TODO: error handling
-      // console.log('error', error);
     }
   }
 }

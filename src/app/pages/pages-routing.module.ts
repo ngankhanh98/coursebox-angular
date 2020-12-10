@@ -1,33 +1,33 @@
-import { RouterModule, Routes } from "@angular/router";
-import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import { PagesComponent } from "./pages.component";
-import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
-import { ExploreComponent } from "./explore/explore.component";
+import { PagesComponent } from './pages.component';
+import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { ExploreComponent } from './explore/explore.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: PagesComponent,
     children: [
-      { path: "explore", component: ExploreComponent },
+      { path: 'explore', component: ExploreComponent },
       {
-        path: "attend",
+        path: 'attend',
         children: [
           {
-            path: "enrolled-courses",
+            path: 'enrolled-courses',
           },
           {
-            path: "my-courses",
+            path: 'my-courses',
           },
         ],
       },
-      { path: "account" },
+      { path: 'account' },
     ],
   },
-  { path: "", redirectTo: "explore", pathMatch: "full" },
+  { path: '', redirectTo: 'explore', pathMatch: 'full' },
   {
-    path: "**",
+    path: '**',
     component: NotFoundComponent,
   },
 ];

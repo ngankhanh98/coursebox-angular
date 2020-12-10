@@ -7,7 +7,6 @@ export class AuthService {
   constructor(private http: HttpClient, private authStore: AuthStore) {}
 
   public onLogin({ username, password }) {
-    // console.log('username', username);
     return this.http
       .post('http://localhost:3000/v1/auth/login', {
         username: username,
@@ -16,8 +15,7 @@ export class AuthService {
       .subscribe((response) => {
         this.authStore.add({
           username: username,
-          token: response['accessToken'],
-          isLoggedIn: true,
+          token: response['accessToken']
         });
       });
   }

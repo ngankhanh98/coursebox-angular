@@ -15,7 +15,7 @@ export const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'auth',
@@ -25,33 +25,31 @@ export const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./auth/auth.module').then((m) => m.AuthModule),
-
-        // component: NbLoginComponent,
       },
-      {
-        path: 'loginn',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'loginn',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
+      // {
+      //   path: 'loginn',
+      //   component: NbLoginComponent,
+      // },
+      // {
+      //   path: 'register',
+      //   component: NbRegisterComponent,
+      // },
+      // {
+      //   path: 'loginn',
+      //   component: NbLoginComponent,
+      // },
+      // {
+      //   path: 'logout',
+      //   component: NbLogoutComponent,
+      // },
+      // {
+      //   path: 'request-password',
+      //   component: NbRequestPasswordComponent,
+      // },
+      // {
+      //   path: 'reset-password',
+      //   component: NbResetPasswordComponent,
+      // },
     ],
   },
 
