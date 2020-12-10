@@ -1,1 +1,4 @@
-<p>explore works!</p>
+<div *ngIf="(loading$ | async)">Loading...</div>
+<div *ngFor="let course of (courses$ | async )">
+    {{course.courseId}} - {{course.title}}
+</div>
