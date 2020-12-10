@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseQuery } from '../state/course.query';
-import { CourseService } from '../state/course.service';
+import { CourseQuery } from './state/course.query';
+import { CourseService } from './state/course.service';
 
 @Component({
   selector: 'ngx-explore',
