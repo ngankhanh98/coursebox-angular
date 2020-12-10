@@ -1,4 +1,6 @@
-<div *ngFor="let course of (courses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger">
-    <!-- {{course.courseId}} - {{course.title}} -->
-    <ngx-card [title]='course.title' teacher='Ngan Khanh' [id]='course.courseId'></ngx-card>
+<div class="d-flex flex-wrap">
+    <div *ngFor="let course of (courses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
+        class="col-sm-6">
+        <ngx-card [title]='course.title' teacher='Ngan Khanh' [id]='course.courseId'></ngx-card>
+    </div>
 </div>

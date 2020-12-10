@@ -1,1 +1,8 @@
-<!-- <ngx-card></ngx-card> -->
+<!-- <button nbButton status="primary">Create course</button> -->
+<div class="d-flex flex-wrap">
+
+    <div *ngFor="let course of (course$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
+        class="col-sm-6">
+        <ngx-card [title]='course.title' teacher='Ngan Khanh' [id]='course.courseId'></ngx-card>
+    </div>
+</div>
