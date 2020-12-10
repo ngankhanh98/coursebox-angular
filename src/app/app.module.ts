@@ -20,6 +20,9 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+import { AuthGuard } from './pages/guards/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,8 +42,9 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
   ],
   bootstrap: [AppComponent],
+  providers: [AuthGuard],
 })
-export class AppModule {
-}
+export class AppModule {}

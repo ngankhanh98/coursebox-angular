@@ -1,5 +1,5 @@
-import { ExtraOptions, RouterModule, Routes } from "@angular/router";
-import { NgModule } from "@angular/core";
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import {
   NbAuthComponent,
   NbLoginComponent,
@@ -7,54 +7,56 @@ import {
   NbRegisterComponent,
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
-} from "@nebular/auth";
+} from '@nebular/auth';
+import { AuthGuard } from './pages/guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadChildren: () =>
-      import("./pages/pages.module").then((m) => m.PagesModule),
+      import('./pages/pages.module').then((m) => m.PagesModule),
+    canActivate: [AuthGuard],
   },
   {
-    path: "auth",
+    path: 'auth',
     component: NbAuthComponent,
     children: [
       {
-        path: "",
+        path: '',
         loadChildren: () =>
-          import("./auth/auth.module").then((m) => m.AuthModule),
+          import('./auth/auth.module').then((m) => m.AuthModule),
 
         // component: NbLoginComponent,
       },
       {
-        path: "loginn",
+        path: 'loginn',
         component: NbLoginComponent,
       },
       {
-        path: "register",
+        path: 'register',
         component: NbRegisterComponent,
       },
       {
-        path: "loginn",
+        path: 'loginn',
         component: NbLoginComponent,
       },
       {
-        path: "logout",
+        path: 'logout',
         component: NbLogoutComponent,
       },
       {
-        path: "request-password",
+        path: 'request-password',
         component: NbRequestPasswordComponent,
       },
       {
-        path: "reset-password",
+        path: 'reset-password',
         component: NbResetPasswordComponent,
       },
     ],
   },
 
-  { path: "", redirectTo: "pages", pathMatch: "full" },
-  { path: "**", redirectTo: "pages" },
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '**', redirectTo: 'pages' },
 ];
 
 const config: ExtraOptions = {
