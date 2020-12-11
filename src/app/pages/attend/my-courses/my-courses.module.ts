@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MyCoursesComponent } from './my-courses.component';
+import { NgModule } from '@angular/core';
 import { ThemeModule } from 'app/@theme/theme.module';
-import { NbButtonModule } from '@nebular/theme';
+import { MyCoursesComponent } from './my-courses.component';
 
 @NgModule({
   declarations: [MyCoursesComponent],

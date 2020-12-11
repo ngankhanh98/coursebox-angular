@@ -54,7 +54,7 @@ export const routes: Routes = [
   },
 
   { path: '', redirectTo: '/dashboard/explore', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: '/dashboard/explore' },
 ];
 
 const config: ExtraOptions = {

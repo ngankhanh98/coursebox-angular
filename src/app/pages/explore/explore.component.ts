@@ -11,6 +11,7 @@ export class ExploreComponent implements OnInit {
   courses$ = this.courseQuery.allBrowseCourses$;
   loading$ = this.courseQuery.selectLoading();
 
+
   constructor(
     private courseService: CourseService,
     private courseQuery: CourseQuery

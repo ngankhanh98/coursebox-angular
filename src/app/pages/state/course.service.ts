@@ -11,6 +11,7 @@ export class CourseService {
     return this.http
       .get<Course[]>('http://localhost:3000/v1/course')
       .subscribe((res) => {
+        console.log('res', res)
         this.courseStore.set(res);
       });
   }

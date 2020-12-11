@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     const { username, password } = this.loginForm.value;
     try {
       this.authService.onLogin({ username, password });
+      this.authService.onGetMe()
       this.router.navigate(['/dashboard']);
     } catch (error) {
       // TODO: error handling
