@@ -1,9 +1,12 @@
-<!-- <button nbButton status="primary">Create course</button> -->
 <div class="d-flex flex-wrap">
+    <button type="submit" nbButton="" fullwidth status="primary" size="large" ng-reflect-status="primary"
+        ng-reflect-size="large" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+        class="appearance-filled full-width size-large status-primary shape-rectangle nb-transition"
+        (click)='createCourse()'>
+        Create course </button>
 
     <div *ngFor="let course of (myCourses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
         class="col-sm-6">
-        <ngx-card [title]='course.title' [teacher]='course.teacher.fullname'
-            [id]='course.courseId'></ngx-card>
+        <ngx-card [title]='course.title' [teacher]='course.teacher.fullname' [id]='course.courseId'></ngx-card>
     </div>
 </div>
