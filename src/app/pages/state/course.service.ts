@@ -18,7 +18,6 @@ export class CourseService {
     return this.http
       .get<Course[]>('http://localhost:3000/v1/course')
       .subscribe((res) => {
-        console.log('res', res);
         this.courseStore.set(res);
       });
   }
@@ -34,7 +33,6 @@ export class CourseService {
     return this.http
       .post<Course>('http://localhost:3000/v1/course', randomCourse)
       .subscribe((res) => {
-        console.log('res', res);
         const affectedCourse: Course = {
           ...randomCourse,
           courseId: res['courseId'],

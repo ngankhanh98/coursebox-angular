@@ -16,7 +16,6 @@ export class AuthService {
         password: password,
       })
       .subscribe((response) => {
-        console.log('response[]', response['accessToken']);
         this.token = response['accessToken'];
       });
   }
