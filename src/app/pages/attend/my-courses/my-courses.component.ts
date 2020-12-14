@@ -42,6 +42,8 @@ export class MyCoursesComponent implements OnInit {
     this.dialogService
       .open(NewCourseFormComponent)
       .onClose.subscribe((values) => values && this.addCourse(values.title));
+
+      this.courseService.loadCourses()
   }
   createCourse() {
     this.courseService.addRandomCourse();
