@@ -9,6 +9,7 @@ export class CardComponent implements OnInit {
   @Input() title: string;
   @Input() teacher: string;
   @Input() coverImage: string;
+  @Input() courseId: string;
 
   constructor() {}
 

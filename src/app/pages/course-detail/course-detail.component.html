@@ -1,0 +1,7 @@
+<div *ngIf="course$ | async as course">
+    <p>{{course.courseId}} - {{course.title}}</p>
+    <button type="submit" nbButton="" status="primary" size="large" ng-reflect-status="primary" ng-reflect-size="large"
+        ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+        class="appearance-filled size-large status-primary shape-rectangle nb-transition" (click)='onEnroll()'>
+        Enroll me </button>
+</div>

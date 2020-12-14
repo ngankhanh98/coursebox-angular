@@ -7,6 +7,7 @@ import { ExploreComponent } from './explore/explore.component';
 import { EnrolledCoursesComponent } from './attend/enrolled-courses/enrolled-courses.component';
 import { MyCoursesComponent } from './attend/my-courses/my-courses.component';
 import { AccountComponent } from './account/account.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 const routes: Routes = [
   {
@@ -28,8 +29,14 @@ const routes: Routes = [
         ],
       },
       { path: 'account', component: AccountComponent },
+      {
+        path: ':courseId',
+        pathMatch: 'full',
+        component: CourseDetailComponent,
+      },
     ],
   },
+
   { path: '', redirectTo: 'explore', pathMatch: 'full' },
   {
     path: '**',

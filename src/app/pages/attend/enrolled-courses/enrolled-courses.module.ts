@@ -1,14 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EnrolledCoursesComponent } from './enrolled-courses.component';
+import { NgModule } from '@angular/core';
 import { ThemeModule } from 'app/@theme/theme.module';
-
-
-// Hello
+import { AttendModule } from '../attend.module';
+import { EnrolledCoursesComponent } from './enrolled-courses.component';
+import { PipeModule } from '../../pipes/pipe.module';
 @NgModule({
   declarations: [EnrolledCoursesComponent],
-  imports: [
-    CommonModule, ThemeModule
-  ]
+  imports: [CommonModule, ThemeModule, AttendModule, PipeModule],
 })
-export class EnrolledCoursesModule { }
+export class EnrolledCoursesModule {}

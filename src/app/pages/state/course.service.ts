@@ -36,7 +36,7 @@ export class CourseService {
         const affectedCourse: Course = {
           ...randomCourse,
           courseId: res['courseId'],
-          users:[]
+          users: [],
         };
         this.courseStore.add(affectedCourse);
       });
@@ -56,9 +56,22 @@ export class CourseService {
         const affectedCourse: Course = {
           ...course,
           courseId: res['courseId'],
-          users:[]
+          users: [],
         };
         this.courseStore.add(affectedCourse);
       });
+  }
+
+  getCourseByCourseId(courseId: string) {
+    return this.http.get<Course>(`http://localhost:3000/v1/course/${courseId}`);
+  }
+
+  enroll(courseId: string, accessToken: string) {
+    console.log('enroll');
+    return this.http.post(
+      `http://localhost:3000/v1/user/enroll?roleId=member&courseId=${courseId}`,
+      {},
+      { headers: { 'access-token': accessToken } }
+    ).subscribe(res=>console.log('res', res));
   }
 }
