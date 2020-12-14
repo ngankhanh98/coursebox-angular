@@ -32,6 +32,7 @@ export class MyCoursesComponent implements OnInit {
 
   getMyCourses() {
     this.userId$.subscribe((res) => (this.userId = res));
+    if (!this.courseQuery.getCount()) this.courseService.loadCourses();
     this.myCourses$ = this.courseQuery.selectAll({
       filterBy: (course) => course.teacher.userId === this.userId,
     });
