@@ -36,6 +36,7 @@ export class CourseService {
         const affectedCourse: Course = {
           ...randomCourse,
           courseId: res['courseId'],
+          users:[]
         };
         this.courseStore.add(affectedCourse);
       });
@@ -55,6 +56,7 @@ export class CourseService {
         const affectedCourse: Course = {
           ...course,
           courseId: res['courseId'],
+          users:[]
         };
         this.courseStore.add(affectedCourse);
       });

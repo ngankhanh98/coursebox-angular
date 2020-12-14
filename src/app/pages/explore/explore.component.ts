@@ -8,7 +8,7 @@ import { CourseService } from '../state/course.service';
   styleUrls: ['./explore.component.scss'],
 })
 export class ExploreComponent implements OnInit {
-  courses$ = this.courseQuery.allBrowseCourses$;
+  courses$ = this.courseQuery.selectAll();
   loading$ = this.courseQuery.selectLoading();
 
 
