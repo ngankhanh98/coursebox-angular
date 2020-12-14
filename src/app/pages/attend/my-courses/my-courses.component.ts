@@ -37,11 +37,15 @@ export class MyCoursesComponent implements OnInit {
     });
   }
 
-  // open(){
-  //   this.dialogService.open(NewCourseFormComponent)
-  //     .onClose.subscribe(name => name && this.names.push(name));
-  // }
+  open() {
+    this.dialogService
+      .open(NewCourseFormComponent)
+      .onClose.subscribe((values) => values && this.addCourse(values.title));
+  }
   createCourse() {
     this.courseService.addRandomCourse();
+  }
+  addCourse(title) {
+    this.courseService.addCourse(title);
   }
 }

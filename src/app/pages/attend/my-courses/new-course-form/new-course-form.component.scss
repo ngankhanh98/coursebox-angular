@@ -11,3 +11,15 @@ label {
 h1 {
   text-align: center;
 }
+
+nb-card {
+  width: 50rem;
+}
+
+nb-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+button {
+  margin-right: 1rem;
+}

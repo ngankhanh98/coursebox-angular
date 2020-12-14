@@ -28,13 +28,32 @@ export class CourseService {
 
     const randomCourse: CreateCourseDto = {
       title: 'Random course',
-      teacher: teacher
+      teacher: teacher,
     };
     return this.http
       .post<Course>('http://localhost:3000/v1/course', randomCourse)
       .subscribe((res) => {
         const affectedCourse: Course = {
           ...randomCourse,
+          courseId: res['courseId'],
+        };
+        this.courseStore.add(affectedCourse);
+      });
+  }
+
+  public addCourse(title) {
+    let teacher: Auth;
+    this.authQuery.selectFirst().subscribe((result) => (teacher = result));
+
+    const course: CreateCourseDto = {
+      title: title,
+      teacher: teacher,
+    };
+    return this.http
+      .post<Course>('http://localhost:3000/v1/course', course)
+      .subscribe((res) => {
+        const affectedCourse: Course = {
+          ...course,
           courseId: res['courseId'],
         };
         this.courseStore.add(affectedCourse);
