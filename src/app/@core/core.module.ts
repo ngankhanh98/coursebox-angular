@@ -1,4 +1,9 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import {
+  ModuleWithProviders,
+  NgModule,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
@@ -12,6 +17,7 @@ import {
   SeoService,
   StateService,
 } from './utils';
+import { HttpHelper } from './helpers';
 import { UserData } from './data/users';
 import { ElectricityData } from './data/electricity';
 import { SmartTableData } from './data/smart-table';
@@ -82,7 +88,10 @@ const DATA_SERVICES = [
   { provide: EarningData, useClass: EarningService },
   { provide: OrdersProfitChartData, useClass: OrdersProfitChartService },
   { provide: TrafficBarData, useClass: TrafficBarService },
-  { provide: ProfitBarAnimationChartData, useClass: ProfitBarAnimationChartService },
+  {
+    provide: ProfitBarAnimationChartData,
+    useClass: ProfitBarAnimationChartService,
+  },
   { provide: TemperatureHumidityData, useClass: TemperatureHumidityService },
   { provide: SolarData, useClass: SolarService },
   { provide: TrafficChartData, useClass: TrafficChartService },
@@ -103,8 +112,8 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
+  HttpHelper,
   ...NbAuthModule.forRoot({
-
     strategies: [
       NbDummyAuthStrategy.setup({
         name: 'email',
@@ -136,7 +145,8 @@ export const NB_CORE_PROVIDERS = [
   }).providers,
 
   {
-    provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+    provide: NbRoleProvider,
+    useClass: NbSimpleRoleProvider,
   },
   AnalyticsService,
   LayoutService,
@@ -146,12 +156,8 @@ export const NB_CORE_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-    NbAuthModule,
-  ],
+  imports: [CommonModule],
+  exports: [NbAuthModule],
   declarations: [],
 })
 export class CoreModule {
@@ -162,9 +168,7 @@ export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
-      providers: [
-        ...NB_CORE_PROVIDERS,
-      ],
+      providers: [...NB_CORE_PROVIDERS],
     };
   }
 }
