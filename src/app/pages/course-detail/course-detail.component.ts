@@ -19,7 +19,6 @@ export class CourseDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.course$.subscribe((res) => console.log('res', res));
   }
 
   onEnroll() {

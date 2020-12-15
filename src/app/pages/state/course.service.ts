@@ -67,11 +67,12 @@ export class CourseService {
   }
 
   enroll(courseId: string, accessToken: string) {
-    console.log('enroll');
-    return this.http.post(
-      `http://localhost:3000/v1/user/enroll?roleId=member&courseId=${courseId}`,
-      {},
-      { headers: { 'access-token': accessToken } }
-    ).subscribe(res=>console.log('res', res));
+    return this.http
+      .post(
+        `http://localhost:3000/v1/user/enroll?roleId=member&courseId=${courseId}`,
+        {},
+        { headers: { 'access-token': accessToken } }
+      )
+      .subscribe(() => this.loadCourses());
   }
 }
