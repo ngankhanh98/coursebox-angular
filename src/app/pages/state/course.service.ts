@@ -31,16 +31,6 @@ export class CourseService {
       title: title,
       teacher: teacher,
     };
-    // return this.http
-    //   .post<Course>('http://localhost:3000/v1/course', course)
-    //   .subscribe((res) => {
-    //     const affectedCourse: Course = {
-    //       ...course,
-    //       courseId: res['courseId'],
-    //       users: [],
-    //     };
-    //     this.courseStore.add(affectedCourse);
-    //   });
 
     const route = '/course';
     const addNewCorseToState = (res) => {
@@ -63,12 +53,5 @@ export class CourseService {
     const header = { 'access-token': accessToken };
     const reloadCourses = () => this.loadCourses();
     return this.httpHelper._postData(route, {}, header, reloadCourses);
-    // return this.http
-    //   .post(
-    //     `http://localhost:3000/v1/user/enroll?roleId=member&courseId=${courseId}`,
-    //     {},
-    //     { headers: { 'access-token': accessToken } }
-    //   )
-    //   .subscribe(() => this.loadCourses());
   }
 }
