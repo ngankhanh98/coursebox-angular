@@ -45,9 +45,6 @@ export class MyCoursesComponent implements OnInit {
 
       this.courseService.loadCourses()
   }
-  createCourse() {
-    this.courseService.addRandomCourse();
-  }
   addCourse(title) {
     this.courseService.addCourse(title);
   }
