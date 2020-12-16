@@ -18,7 +18,7 @@ export class CourseDetailComponent implements OnInit {
   userId$ = this.authQuery.selectFirst((entity) => entity.userId);
 
   allowEnroll$: Observable<object>;
-
+  allowDelete$: Observable<object>;
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
@@ -32,21 +32,32 @@ export class CourseDetailComponent implements OnInit {
   onEnroll() {
     let accessToken: string;
     this.token$.subscribe((token) => (accessToken = token));
-    const reloadMyEnrolledCourses = () => this.onLoad()
-    return this.courseService.enroll(this.courseId, accessToken, reloadMyEnrolledCourses);
+    const reloadMyEnrolledCourses = () => this.onLoad();
+    return this.courseService.enroll(
+      this.courseId,
+      accessToken,
+      reloadMyEnrolledCourses
+    );
   }
 
   onLoad() {
     this.userId$.subscribe((userid) => (this.userId = userid));
+
     this.allowEnroll$ = this.course$.pipe(
       filter((e) => e['users'].findIndex((x) => x['userId'] === this.userId))
     );
 
-    this.allowEnroll$.subscribe((res) => console.log('res', res));
+    this.allowDelete$ = this.course$.pipe(
+      filter((e) => e['teacher']['userId'] == this.userId)
+    );
   }
 
   onUnenroll() {
-    const reloadMyEnrolledCourses = () => this.onLoad()
-    return this.courseService.unenroll(this.courseId, this.userId, reloadMyEnrolledCourses);
+    const reloadMyEnrolledCourses = () => this.onLoad();
+    return this.courseService.unenroll(
+      this.courseId,
+      this.userId,
+      reloadMyEnrolledCourses
+    );
   }
 }

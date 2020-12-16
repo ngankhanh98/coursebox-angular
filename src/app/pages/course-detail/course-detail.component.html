@@ -1,15 +1,24 @@
-<div *ngIf="course$ | async as course">
+<div *ngIf="course$ | async as course" class="d-flex">
     <p>{{course.courseId}} - {{course.title}}</p>
-    <div *ngIf="allowEnroll$ | async">
-        <button type="submit" nbButton="" status="primary" size="large" ng-reflect-status="primary"
-            ng-reflect-size="large" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
-            class="appearance-filled size-large status-primary shape-rectangle nb-transition" (click)='onEnroll()'>
-            Enroll me </button>
-    </div>
+ 
 
     <div *ngIf="!(allowEnroll$ | async)">
         <button nbButton status="danger"
-            class="appearance-filled size-medium status-danger shape-rectangle nb-transition" (click)="onUnenroll()">Unenroll me</button>
+            class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
+            (click)="onUnenroll()">Unenroll me</button>
 
+    </div>
+
+    <div *ngIf="allowDelete$ | async">
+        <button nbButton status="danger"
+            class="appearance-filled size-medium status-danger shape-rectangle nb-transition">Delete course</button>
+
+    </div>
+
+    <div *ngIf="(allowEnroll$ | async) && !(allowDelete$ | async)">
+        <button type="submit" nbButton="" status="primary" size="medium" ng-reflect-status="primary"
+            ng-reflect-size="medium" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+            class="appearance-filled size-medium status-primary shape-rectangle nb-transition" (click)='onEnroll()'>
+            Enroll me </button>
     </div>
 </div>
