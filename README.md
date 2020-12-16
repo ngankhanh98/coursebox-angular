@@ -26,7 +26,7 @@
 - [ ] search
 - [ ] /account    
 - [ ] /logout
-- [ ] /forgot-password
+- [x] /forgot-password
 - [ ] /
 
 #### TODO: api
