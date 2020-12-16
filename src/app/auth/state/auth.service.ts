@@ -6,6 +6,7 @@ import { AuthStore } from './auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  
   token: string;
   constructor(
     private http: HttpClient,
@@ -30,5 +31,11 @@ export class AuthService {
     };
 
     return this.httpHelper._fetchData(route, header, addMyInfoToState);
+  }
+
+  onDeleteAccount() {
+    // const route = '/user'
+    // const header = { 'access-token': this.token }
+    // return this.httpHelper._deleteData(route, header, )
   }
 }
