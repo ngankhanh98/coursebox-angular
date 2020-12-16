@@ -32,7 +32,12 @@ export class CourseDetailComponent implements OnInit {
   onEnroll() {
     let accessToken: string;
     this.token$.subscribe((token) => (accessToken = token));
-    const reloadMyEnrolledCourses = () => this.onLoad();
+
+    const reloadMyEnrolledCourses = () => {
+      this.courseService.loadCourses();
+      this.onLoad();
+    };
+
     return this.courseService.enroll(
       this.courseId,
       accessToken,
@@ -53,11 +58,19 @@ export class CourseDetailComponent implements OnInit {
   }
 
   onUnenroll() {
-    const reloadMyEnrolledCourses = () => this.onLoad();
+    const reloadMyEnrolledCourses = () => {
+      this.courseService.loadCourses();
+      this.onLoad();
+    };
+
     return this.courseService.unenroll(
       this.courseId,
       this.userId,
       reloadMyEnrolledCourses
     );
+  }
+
+  onDeleteCourse() {
+    return this.courseService.deleteCourse(this.courseId);
   }
 }

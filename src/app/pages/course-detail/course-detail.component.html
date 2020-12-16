@@ -11,7 +11,7 @@
 
     <div *ngIf="allowDelete$ | async">
         <button nbButton status="danger"
-            class="appearance-filled size-medium status-danger shape-rectangle nb-transition">Delete course</button>
+            class="appearance-filled size-medium status-danger shape-rectangle nb-transition" (click)="onDeleteCourse()">Delete course</button>
 
     </div>
 
