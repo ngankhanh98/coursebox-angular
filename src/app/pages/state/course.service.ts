@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpHelper } from 'app/@core/helpers';
 import { Auth } from 'app/auth/state/auth';
 import { AuthQuery } from 'app/auth/state/auth.query';
+import { Observable } from 'rxjs';
 import { Course } from './course';
 import { CourseStore } from './course.store';
 import { CreateCourseDto } from './dto/course.dto';
@@ -48,10 +49,14 @@ export class CourseService {
     return this.httpHelper._fetchData$(`/course/${courseId}`, {});
   }
 
-  enroll(courseId: string, accessToken: string) {
+  enroll(courseId: string, accessToken: string, callback: () => any) {
     const route = `/user/enroll?roleId=member&courseId=${courseId}`;
     const header = { 'access-token': accessToken };
-    const reloadCourses = () => this.loadCourses();
-    return this.httpHelper._postData(route, {}, header, reloadCourses);
+    return this.httpHelper._postData(route, {}, header, callback);
+  }
+
+  unenroll(courseId: string, userId: string, callback: () => any) {
+    const route = `/course/${courseId}/${userId}`;
+    return this.httpHelper._deleteData(route, callback);
   }
 }

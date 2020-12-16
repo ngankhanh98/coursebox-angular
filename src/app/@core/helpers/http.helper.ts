@@ -28,4 +28,8 @@ export class HttpHelper {
   _fetchData$(route: string, header) {
     return this.httpClient.get(this.url + route, { headers: header });
   }
+
+  _deleteData(route: string, success_callback: (res: any) => any) {
+    return this.httpClient.delete(this.url + route).subscribe(success_callback);
+  }
 }
