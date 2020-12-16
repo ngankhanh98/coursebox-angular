@@ -56,7 +56,7 @@ export class CourseDetailComponent implements OnInit {
     );
 
     this.allowDelete$ = this.course$.pipe(
-      filter((e) => e['teacher']['userId'] == this.userId)
+      filter((e) => e['teacher']['userId'] === this.userId)
     );
   }
 

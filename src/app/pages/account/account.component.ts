@@ -10,6 +10,7 @@ import { AuthService } from 'app/auth/state/auth.service';
 })
 export class AccountComponent implements OnInit {
   authState$ = this.authQuery.selectFirst();
+  username: string;
 
   constructor(
     private authQuery: AuthQuery,
@@ -18,12 +19,14 @@ export class AccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authState$.subscribe((res) => console.log('res', res));
+    this.authState$.subscribe((user) => (this.username = user.username));
   }
 
   onRequestPassword(password) {
-    console.log('password', password);
     // this.route.navigate(['../../auth/request-password']);
+    this.authService.onRequestPassword(this.username);
+
+    this.authService.onChangePassword(password);
   }
 
   onDeleteAccount() {

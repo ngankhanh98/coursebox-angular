@@ -6,8 +6,8 @@ import { AuthStore } from './auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  
   token: string;
+  resetPwdToken: string;
   constructor(
     private http: HttpClient,
     private authStore: AuthStore,
@@ -37,5 +37,24 @@ export class AuthService {
     // const route = '/user'
     // const header = { 'access-token': this.token }
     // return this.httpHelper._deleteData(route, header, )
+  }
+
+  onRequestPassword(username) {
+    const route = '/auth/forgot-password';
+    const setResetPwdToken = (res) => {
+      this.resetPwdToken = res['resetPwdToken'];
+    };
+    const header = { username: username };
+    return this.httpHelper._fetchData(route, header, setResetPwdToken);
+  }
+
+  onChangePassword(password: any) {
+    const route = `/auth/reset-password?token=${this.resetPwdToken}`;
+    return this.httpHelper._postData(
+      route,
+      { password: password },
+      {},
+      () => {}
+    );
   }
 }
