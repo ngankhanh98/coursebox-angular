@@ -49,7 +49,7 @@ export class CourseService {
     return this.httpHelper._fetchData$(`/course/${courseId}`, {});
   }
 
-  enroll(courseId: string, accessToken: string, callback: () => any) {
+  enroll(courseId: string, accessToken: string, callback: () => void) {
     const route = `/user/enroll?roleId=member&courseId=${courseId}`;
     const header = { 'access-token': accessToken };
     return this.httpHelper._postData(route, {}, header, callback);

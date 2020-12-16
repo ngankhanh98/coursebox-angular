@@ -4,11 +4,13 @@
         <li>Title: {{course.title}}</li>
         <li>Created at: {{course.createdAt}}</li>
         <li>Teacher: {{course.teacher.username}}</li>
-        <li>Members:
-            <ul *ngFor="let user of (users$ | async)">
-                <li>{{user.userId}} - {{user.username}}</li>
-            </ul>
-        </li>
+        <div *ngIf="users$ | async as users">
+            <li>Members:
+                <ul *ngFor="let user of (users.users | async)">
+                    <li>{{user.userId}} - {{user.username}}</li>
+                </ul>
+            </li>
+        </div>
     </ul>
     <div class="d-flex">
         <div *ngIf="!(allowEnroll$ | async)">
