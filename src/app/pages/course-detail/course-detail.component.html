@@ -1,24 +1,35 @@
-<div *ngIf="course$ | async as course" class="d-flex">
-    <p>{{course.courseId}} - {{course.title}}</p>
- 
+<div *ngIf="course$ | async as course">
 
-    <div *ngIf="!(allowEnroll$ | async)">
-        <button nbButton status="danger"
-            class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
-            (click)="onUnenroll()">Unenroll me</button>
+    <ul>
+        <li>Title: {{course.title}}</li>
+        <li>Created at: {{course.createdAt}}</li>
+        <li>Teacher: {{course.teacher.username}}</li>
+        <li>Members:
+            <ul *ngFor="let user of (users$ | async)">
+                <li>{{user.userId}} - {{user.username}}</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <div *ngIf="!(allowEnroll$ | async)">
+            <button nbButton status="danger"
+                class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
+                (click)="onUnenroll()">Unenroll me</button>
 
-    </div>
+        </div>
 
-    <div *ngIf="allowDelete$ | async">
-        <button nbButton status="danger"
-            class="appearance-filled size-medium status-danger shape-rectangle nb-transition" (click)="onDeleteCourse()">Delete course</button>
+        <div *ngIf="allowDelete$ | async">
+            <button nbButton status="danger"
+                class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
+                (click)="onDeleteCourse()">Delete course</button>
 
-    </div>
+        </div>
 
-    <div *ngIf="(allowEnroll$ | async) && !(allowDelete$ | async)">
-        <button type="submit" nbButton="" status="primary" size="medium" ng-reflect-status="primary"
-            ng-reflect-size="medium" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
-            class="appearance-filled size-medium status-primary shape-rectangle nb-transition" (click)='onEnroll()'>
-            Enroll me </button>
+        <div *ngIf="(allowEnroll$ | async) && !(allowDelete$ | async)">
+            <button type="submit" nbButton="" status="primary" size="medium" ng-reflect-status="primary"
+                ng-reflect-size="medium" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+                class="appearance-filled size-medium status-primary shape-rectangle nb-transition" (click)='onEnroll()'>
+                Enroll me </button>
+        </div>
     </div>
 </div>

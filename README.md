@@ -20,8 +20,8 @@
 - [ ] /dashboard/:courseId
     - [x] one who enrolled course must not enroll again (enroll button disabled)
     - [x] one who enrolled course can unenroll (unenroll button appear)
-    - [ ] one who create course must not enroll to this course (enroll button disabled)
-    - [ ] one who create course can delete course (delete button appear)
+    - [x] one who create course must not enroll to this course (enroll button disabled)
+    - [x] one who create course can delete course (delete button appear)
     - [ ] show members and teacher (fix api)
 - [ ] search
 - [ ] /account    

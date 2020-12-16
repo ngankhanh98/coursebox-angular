@@ -3,6 +3,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthQuery } from 'app/auth/state/auth.query';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { CourseQuery } from '../state/course.query';
 import { CourseService } from '../state/course.service';
 
 @Component({
@@ -16,13 +17,15 @@ export class CourseDetailComponent implements OnInit {
   course$ = this.courseService.getCourseByCourseId(this.courseId);
   token$ = this.authQuery.selectFirst((entity) => entity.token);
   userId$ = this.authQuery.selectFirst((entity) => entity.userId);
+  users$ = this.courseQuery.selectFirst((entity) => entity.users);
 
   allowEnroll$: Observable<object>;
   allowDelete$: Observable<object>;
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private authQuery: AuthQuery
+    private authQuery: AuthQuery,
+    private courseQuery: CourseQuery
   ) {}
 
   ngOnInit(): void {
