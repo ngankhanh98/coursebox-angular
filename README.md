@@ -22,7 +22,7 @@
     - [x] one who enrolled course can unenroll (unenroll button appear)
     - [x] one who create course must not enroll to this course (enroll button disabled)
     - [x] one who create course can delete course (delete button appear)
-    - [ ] show members and teacher (fix api)
+    - [x] show members and teacher (fix api)
 - [ ] search
 - [ ] /account    
 - [ ] /logout
