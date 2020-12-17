@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
 import { ThemeModule } from 'app/@theme/theme.module';
 
-import { ChangePasswordFormComponent } from './change-password-form.component';
 
 @NgModule({
   imports: [

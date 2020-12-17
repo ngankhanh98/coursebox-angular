@@ -15,15 +15,12 @@ import { switchMap } from 'rxjs/operators';
 })
 export class MyCoursesComponent implements OnInit {
   loading$ = this.courseQuery.selectLoading();
-  userId$ = this.authQuery.selectFirst((entity) => entity.userId);
 
-  // myCourses$: Observable<Course[]>;
-
-  myCourses$ = this.userId$.pipe(
-    switchMap((userId) =>
-      userId
+  myCourses$ = this.authQuery.selectFirst().pipe(
+    switchMap((user) =>
+      user
         ? this.courseQuery.selectAll({
-            filterBy: (entity) => entity.teacher.userId === userId,
+            filterBy: (entity) => entity.teacher.userId === user.userId,
           })
         : this.courseQuery.selectAll()
     )
@@ -36,8 +33,7 @@ export class MyCoursesComponent implements OnInit {
     private dialogService: NbDialogService
   ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   open() {
     this.dialogService

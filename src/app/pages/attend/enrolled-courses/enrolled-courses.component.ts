@@ -13,26 +13,20 @@ import { filter, map, switchMap } from 'rxjs/operators';
 export class EnrolledCoursesComponent implements OnInit {
   loading$ = this.courseQuery.selectLoading();
 
-  userId$ = this.authQuery.selectFirst((entity) => entity.userId);
-
-  courses$ = this.courseQuery.selectAll();
-
-  enrolledCourses$ = this.userId$.pipe(
+  enrolledCourses$ = this.authQuery.selectFirst().pipe(
     switchMap((user) =>
       user
         ? this.courseQuery.selectAll({
-            filterBy: (entity) =>
-              entity.users.findIndex((e) => e.userId === user) !== -1,
+            filterBy: (course) =>
+              course.users.findIndex(
+                (member) => member.userId === user.userId
+              ) !== -1,
           })
         : this.courseQuery.selectAll()
     )
   );
 
-  userId: string;
-
   constructor(private courseQuery: CourseQuery, private authQuery: AuthQuery) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
