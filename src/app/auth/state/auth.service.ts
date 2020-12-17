@@ -9,10 +9,7 @@ export class AuthService {
   token: string;
   resetPwdToken: string;
 
-  constructor(
-    private authStore: AuthStore,
-    private httpHelper: HttpHelper
-  ) {}
+  constructor(private authStore: AuthStore, private httpHelper: HttpHelper) {}
 
   onLogin({ username, password }) {
     const route = '/auth/login';
@@ -20,6 +17,10 @@ export class AuthService {
     const storeToken = (res) => (this.token = res['accessToken']);
 
     return this.httpHelper._postData(route, data, {}, storeToken);
+  }
+
+  onLogout() {
+    this.authStore.remove((entity) => entity.token === this.token);
   }
 
   onGetMe() {
