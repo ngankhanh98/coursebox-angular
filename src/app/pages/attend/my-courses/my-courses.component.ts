@@ -6,6 +6,7 @@ import { CourseService } from 'app/pages/state/course.service';
 import { Observable } from 'rxjs';
 import { NbDialogService } from '@nebular/theme';
 import { NewCourseFormComponent } from './new-course-form/new-course-form.component';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-my-courses',
@@ -14,10 +15,19 @@ import { NewCourseFormComponent } from './new-course-form/new-course-form.compon
 })
 export class MyCoursesComponent implements OnInit {
   loading$ = this.courseQuery.selectLoading();
-  userId: string;
   userId$ = this.authQuery.selectFirst((entity) => entity.userId);
 
-  myCourses$: Observable<Course[]>;
+  // myCourses$: Observable<Course[]>;
+
+  myCourses$ = this.userId$.pipe(
+    switchMap((userId) =>
+      userId
+        ? this.courseQuery.selectAll({
+            filterBy: (entity) => entity.teacher.userId === userId,
+          })
+        : this.courseQuery.selectAll()
+    )
+  );
 
   constructor(
     private courseQuery: CourseQuery,
@@ -27,15 +37,6 @@ export class MyCoursesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getMyCourses();
-  }
-
-  getMyCourses() {
-    this.userId$.subscribe((res) => (this.userId = res));
-    if (!this.courseQuery.getCount()) this.courseService.loadCourses();
-    this.myCourses$ = this.courseQuery.selectAll({
-      filterBy: (course) => course.teacher.userId === this.userId,
-    });
   }
 
   open() {
@@ -43,7 +44,7 @@ export class MyCoursesComponent implements OnInit {
       .open(NewCourseFormComponent)
       .onClose.subscribe((values) => values && this.addCourse(values.title));
 
-      this.courseService.loadCourses()
+    this.courseService.loadCourses();
   }
   addCourse(title) {
     this.courseService.addCourse(title);
