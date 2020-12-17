@@ -8,13 +8,13 @@ import { AuthStore } from './auth.store';
 export class AuthService {
   token: string;
   resetPwdToken: string;
+
   constructor(
-    private http: HttpClient,
     private authStore: AuthStore,
     private httpHelper: HttpHelper
   ) {}
 
-  public onLogin({ username, password }) {
+  onLogin({ username, password }) {
     const route = '/auth/login';
     const data = { username: username, password: password };
     const storeToken = (res) => (this.token = res['accessToken']);
@@ -22,7 +22,7 @@ export class AuthService {
     return this.httpHelper._postData(route, data, {}, storeToken);
   }
 
-  public onGetMe() {
+  onGetMe() {
     const route = '/user/me';
     const header = { 'access-token': this.token };
     const addMyInfoToState = (response) => {
@@ -34,9 +34,9 @@ export class AuthService {
   }
 
   onDeleteAccount() {
-    // const route = '/user'
-    // const header = { 'access-token': this.token }
-    // return this.httpHelper._deleteData(route, header, )
+    const route = '/user';
+    const header = { 'access-token': this.token };
+    return this.httpHelper._deleteData(route, header, () => {});
   }
 
   onRequestPassword(username) {

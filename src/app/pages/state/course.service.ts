@@ -57,13 +57,13 @@ export class CourseService {
 
   unenroll(courseId: string, userId: string, callback: () => any) {
     const route = `/course/${courseId}/${userId}`;
-    return this.httpHelper._deleteData(route, callback);
+    return this.httpHelper._deleteData(route, {}, callback);
   }
 
   deleteCourse(courseId: string) {
     const route = `/course/${courseId}`;
     const deleteCourseFromState = () =>
       this.courseStore.remove((e) => e['courseId'] === courseId);
-    return this.httpHelper._deleteData(route, deleteCourseFromState);
+    return this.httpHelper._deleteData(route, {}, deleteCourseFromState);
   }
 }

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     try {
       this.authService.onLogin({ username, password });
       this.authService.onGetMe()
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/explore']);
     } catch (error) {
       // TODO: error handling
     }

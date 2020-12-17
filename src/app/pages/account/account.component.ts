@@ -10,22 +10,17 @@ import { AuthService } from 'app/auth/state/auth.service';
 })
 export class AccountComponent implements OnInit {
   authState$ = this.authQuery.selectFirst();
-  username: string;
 
-  constructor(
-    private authQuery: AuthQuery,
-    private route: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private authQuery: AuthQuery, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authState$.subscribe((user) => (this.username = user.username));
   }
 
   onRequestPassword(password) {
-    // this.route.navigate(['../../auth/request-password']);
-    this.authService.onRequestPassword(this.username);
+    let username: string;
+    this.authState$.subscribe((user) => (username = user.username));
 
+    this.authService.onRequestPassword(username);
     this.authService.onChangePassword(password);
   }
 
