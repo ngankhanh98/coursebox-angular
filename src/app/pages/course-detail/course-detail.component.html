@@ -6,7 +6,7 @@
         <li>Teacher: {{course.teacher.username}}</li>
         <div *ngIf="users$ | async as users">
             <li>Members:
-                <ul *ngFor="let user of (users.users | async)">
+                <ul *ngFor="let user of users.users">
                     <li>{{user.userId}} - {{user.username}}</li>
                 </ul>
             </li>
