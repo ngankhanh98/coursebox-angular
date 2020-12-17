@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthQuery } from 'app/auth/state/auth.query';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { CourseQuery } from '../state/course.query';
 import { CourseService } from '../state/course.service';
 
@@ -13,14 +13,41 @@ import { CourseService } from '../state/course.service';
 })
 export class CourseDetailComponent implements OnInit {
   courseId = this.route.snapshot.paramMap.get('courseId');
-  userId: string;
+  userId = this.authQuery.getAll()[0].userId;
   course$ = this.courseService.getCourseByCourseId(this.courseId);
   token$ = this.authQuery.selectFirst((entity) => entity.token);
-  userId$ = this.authQuery.selectFirst((entity) => entity.userId);
+  // userId$ = this.authQuery.selectFirst((entity) => entity.userId);
   users$ = this.courseQuery.selectEntity((e) => e.courseId === this.courseId);
 
-  allowEnroll$: Observable<object>;
-  allowDelete$: Observable<object>;
+  // allowEnroll$: Observable<object>;
+  // allowDelete$: Observable<object>;
+
+  // allowEnroll$ = course.users.userId !== user.userId
+  isMember$ = this.authQuery.selectFirst().pipe(
+    switchMap((user) =>
+      user
+        ? this.courseQuery.selectAll({
+            filterBy: (course) =>
+              course.users.findIndex((x) => x.userId === user.userId) !== -1 &&
+              course.courseId === this.courseId,
+          })
+        : null
+    )
+  );
+
+  // allowDelete$ = course.teacher.userId === user.userId
+  isTeacher$ = this.authQuery.selectFirst().pipe(
+    switchMap((user) =>
+      user
+        ? this.courseQuery.selectAll({
+            filterBy: (course) =>
+              course.teacher.userId === user.userId &&
+              course.courseId === this.courseId,
+          })
+        : null
+    )
+  );
+
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
@@ -29,7 +56,10 @@ export class CourseDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onLoad();
+    // this.onLoad();
+
+    this.isMember$.subscribe((e) => console.log('enroll', e));
+    this.isTeacher$.subscribe((e) => console.log('delete', e));
   }
 
   onEnroll() {
@@ -38,7 +68,7 @@ export class CourseDetailComponent implements OnInit {
 
     const reloadMyEnrolledCourses = () => {
       this.courseService.loadCourses();
-      this.onLoad();
+      // this.onLoad();
     };
 
     return this.courseService.enroll(
@@ -48,22 +78,22 @@ export class CourseDetailComponent implements OnInit {
     );
   }
 
-  onLoad() {
-    this.userId$.subscribe((userid) => (this.userId = userid));
+  // onLoad() {
+  //   this.userId$.subscribe((userid) => (this.userId = userid));
 
-    this.allowEnroll$ = this.course$.pipe(
-      filter((e) => e['users'].findIndex((x) => x['userId'] === this.userId))
-    );
+  //   this.allowEnroll$ = this.course$.pipe(
+  //     filter((e) => e['users'].findIndex((x) => x['userId'] === this.userId))
+  //   );
 
-    this.allowDelete$ = this.course$.pipe(
-      filter((e) => e['teacher']['userId'] === this.userId)
-    );
-  }
+  //   this.allowDelete$ = this.course$.pipe(
+  //     filter((e) => e['teacher']['userId'] === this.userId)
+  //   );
+  // }
 
   onUnenroll() {
     const reloadMyEnrolledCourses = () => {
       this.courseService.loadCourses();
-      this.onLoad();
+      // this.onLoad();
     };
 
     return this.courseService.unenroll(
