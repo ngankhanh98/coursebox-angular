@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthQuery } from 'app/auth/state/auth.query';
-import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { CourseQuery } from '../state/course.query';
 import { CourseService } from '../state/course.service';
 
@@ -16,13 +15,8 @@ export class CourseDetailComponent implements OnInit {
   userId = this.authQuery.getAll()[0].userId;
   course$ = this.courseService.getCourseByCourseId(this.courseId);
   token$ = this.authQuery.selectFirst((entity) => entity.token);
-  // userId$ = this.authQuery.selectFirst((entity) => entity.userId);
   users$ = this.courseQuery.selectEntity((e) => e.courseId === this.courseId);
 
-  // allowEnroll$: Observable<object>;
-  // allowDelete$: Observable<object>;
-
-  // allowEnroll$ = course.users.userId !== user.userId
   isMember$ = this.authQuery.selectFirst().pipe(
     switchMap((user) =>
       user
@@ -35,7 +29,6 @@ export class CourseDetailComponent implements OnInit {
     )
   );
 
-  // allowDelete$ = course.teacher.userId === user.userId
   isTeacher$ = this.authQuery.selectFirst().pipe(
     switchMap((user) =>
       user
@@ -55,12 +48,7 @@ export class CourseDetailComponent implements OnInit {
     private courseQuery: CourseQuery
   ) {}
 
-  ngOnInit(): void {
-    // this.onLoad();
-
-    this.isMember$.subscribe((e) => console.log('enroll', e));
-    this.isTeacher$.subscribe((e) => console.log('delete', e));
-  }
+  ngOnInit(): void {}
 
   onEnroll() {
     let accessToken: string;
@@ -68,7 +56,6 @@ export class CourseDetailComponent implements OnInit {
 
     const reloadMyEnrolledCourses = () => {
       this.courseService.loadCourses();
-      // this.onLoad();
     };
 
     return this.courseService.enroll(
@@ -78,22 +65,9 @@ export class CourseDetailComponent implements OnInit {
     );
   }
 
-  // onLoad() {
-  //   this.userId$.subscribe((userid) => (this.userId = userid));
-
-  //   this.allowEnroll$ = this.course$.pipe(
-  //     filter((e) => e['users'].findIndex((x) => x['userId'] === this.userId))
-  //   );
-
-  //   this.allowDelete$ = this.course$.pipe(
-  //     filter((e) => e['teacher']['userId'] === this.userId)
-  //   );
-  // }
-
   onUnenroll() {
     const reloadMyEnrolledCourses = () => {
       this.courseService.loadCourses();
-      // this.onLoad();
     };
 
     return this.courseService.unenroll(

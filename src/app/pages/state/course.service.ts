@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpHelper } from 'app/@core/helpers';
 import { Auth } from 'app/auth/state/auth';
 import { AuthQuery } from 'app/auth/state/auth.query';
-import { Observable } from 'rxjs';
 import { Course } from './course';
 import { CourseStore } from './course.store';
 import { CreateCourseDto } from './dto/course.dto';
@@ -14,7 +14,8 @@ export class CourseService {
     private http: HttpClient,
     private courseStore: CourseStore,
     private authQuery: AuthQuery,
-    private httpHelper: HttpHelper
+    private httpHelper: HttpHelper,
+    private router: Router
   ) {}
 
   public loadCourses() {
@@ -62,8 +63,10 @@ export class CourseService {
 
   deleteCourse(courseId: string) {
     const route = `/course/${courseId}`;
-    const deleteCourseFromState = () =>
+    const deleteCourseFromState = () => {
       this.courseStore.remove((e) => e['courseId'] === courseId);
+      this.router.navigate(['/dashboard/explore']);
+    };
     return this.httpHelper._deleteData(route, {}, deleteCourseFromState);
   }
 }
