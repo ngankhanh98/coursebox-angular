@@ -38,10 +38,10 @@ export const routes: Routes = [
       //   path: 'loginn',
       //   component: NbLoginComponent,
       // },
-      // {
-      //   path: 'logout',
-      //   component: NbLogoutComponent,
-      // },
+      {
+        path: 'logout',
+        component: NbLogoutComponent,
+      },
       {
         path: 'request-password',
         component: NbRequestPasswordComponent,

@@ -11,7 +11,6 @@ import { CreateCourseDto } from './dto/course.dto';
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   constructor(
-    private http: HttpClient,
     private courseStore: CourseStore,
     private authQuery: AuthQuery,
     private httpHelper: HttpHelper,

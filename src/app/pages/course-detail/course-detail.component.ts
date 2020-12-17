@@ -13,8 +13,9 @@ import { CourseService } from '../state/course.service';
 export class CourseDetailComponent implements OnInit {
   courseId = this.route.snapshot.paramMap.get('courseId');
   userId = this.authQuery.getAll()[0].userId;
+  token = this.authQuery.getAll()[0].token;
+
   course$ = this.courseService.getCourseByCourseId(this.courseId);
-  token$ = this.authQuery.selectFirst((entity) => entity.token);
   users$ = this.courseQuery.selectEntity((e) => e.courseId === this.courseId);
 
   isMember$ = this.authQuery.selectFirst().pipe(
@@ -51,16 +52,13 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit(): void {}
 
   onEnroll() {
-    let accessToken: string;
-    this.token$.subscribe((token) => (accessToken = token));
-
     const reloadMyEnrolledCourses = () => {
       this.courseService.loadCourses();
     };
 
     return this.courseService.enroll(
       this.courseId,
-      accessToken,
+      this.token,
       reloadMyEnrolledCourses
     );
   }
