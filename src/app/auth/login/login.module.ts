@@ -12,7 +12,7 @@ import {
   NbUserModule,
 } from "@nebular/theme";
 
-import { ThemeModule } from "../../@theme/theme.module";
+import { SharedModule } from "../../@shared/shared.module";
 import {
   FormsModule as ngFormsModule,
   ReactiveFormsModule,
@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [
     CommonModule,
-    ThemeModule,
+    SharedModule,
     NbInputModule,
     NbCardModule,
     NbButtonModule,

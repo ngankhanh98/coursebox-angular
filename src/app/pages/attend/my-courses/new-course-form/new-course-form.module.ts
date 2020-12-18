@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewCourseFormComponent } from './new-course-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { SharedModule } from 'app/@shared/shared.module';
 import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
 
 @NgModule({
@@ -11,7 +11,7 @@ import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ThemeModule,
+    SharedModule,
     NbCardModule,
     NbButtonModule,
     NbInputModule,

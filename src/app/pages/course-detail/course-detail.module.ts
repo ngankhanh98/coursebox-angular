@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbButtonModule } from '@nebular/theme';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { SharedModule } from 'app/@shared/shared.module';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ThemeModule, NbButtonModule],
+  imports: [CommonModule, SharedModule, NbButtonModule],
 })
 export class CourseDetailModule {}

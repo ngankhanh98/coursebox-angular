@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
-import { ThemeModule } from 'app/@theme/theme.module';
+import { SharedModule } from 'app/@shared/shared.module';
 
 
 @NgModule({
@@ -10,7 +10,7 @@ import { ThemeModule } from 'app/@theme/theme.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ThemeModule,
+    SharedModule,
     NbCardModule,
     NbButtonModule,
     NbInputModule,

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
-import { ThemeModule } from './@theme/theme.module';
+import { SharedModule } from './@shared/shared.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
@@ -42,7 +42,7 @@ import { AuthGuard } from './pages/guards/auth.guard';
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
-    ThemeModule.forRoot(),
+    SharedModule.forRoot(),
     environment.production ? [] : AkitaNgDevtools.forRoot(),
   ],
   bootstrap: [AppComponent],
