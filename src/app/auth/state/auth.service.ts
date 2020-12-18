@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpHelper } from 'app/@core/helpers/http.helper';
 import { Auth } from './auth';
 import { AuthQuery } from './auth.query';
-import { AuthState, AuthStore } from './auth.store';
+import { AuthStore } from './auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   token: string;
-  userId$ = this.authQuery.selectFirst((entity) => entity.userId);
+  user$ = this.authQuery.selectFirst();
+
   constructor(
     private authStore: AuthStore,
     private httpHelper: HttpHelper,
@@ -18,19 +19,12 @@ export class AuthService {
     this.authStore.add(user);
   }
 
-  private UPDATE_STATE({props}){
-    // this.authStore.update()
+  private REMOVE_STATE(userId) {
+    this.authStore.remove(userId);
   }
-  // private getMe(token) {
-  //   const route = '/user/me';
-  //   const header = { 'access-token': token };
-  //   const addMyInfoToState = (response) => {
-  //     const res: Auth = { ...response, token: token };
-  //     this.authStore.add(res);
-  //   };
-
-  //   return this.httpHelper._fetchData(route, header, addMyInfoToState);
-  // }
+  private UPDATE_STATE(userId, prop: Partial<Auth>) {
+    this.authStore.update((entity) => entity.userId === userId, { ...prop });
+  }
 
   login({ username, password }) {
     const route = '/auth/login';
@@ -42,40 +36,49 @@ export class AuthService {
   }
 
   logout() {
-    this.userId$.subscribe((userId) =>
-      this.authStore.remove((entity) => entity.userId === userId)
-    );
+    this.user$.subscribe((user) => this.REMOVE_STATE(user.userId));
   }
 
-  onDeleteAccount() {
+  // FIXME: isssues/6
+  deleteAccount() {
     const route = '/user';
-    const header = { 'access-token': this.token };
-    return this.httpHelper._deleteData(route, header, () => {});
+    let header;
+    this.user$.subscribe(
+      (user) => (header = { 'access-token': user.accessToken })
+    );
+
+    return this.httpHelper._deleteData(route, header, () => this.logout());
   }
 
-  onRequestPassword(username) {
+  requestPassword() {
     const route = '/auth/forgot-password';
 
     const setResetPwdToken = (res) => {
-      const auth: Auth = {
-        ...this.authQuery.getAll()[0],
+      let userId: string;
+      this.user$.subscribe((user) => (userId = user.userId));
+      const resetPwdToken: Partial<Auth> = {
         resetPwdToken: res['resetPwdToken'],
       };
-      this.authStore.update((entity) => entity.userId === auth.userId, {
-        resetPwdToken: res['resetPwdToken'],
-      });
-      // this.authStore.add(auth);
+      this.UPDATE_STATE(userId, resetPwdToken);
     };
-    const header = { username: username };
+
+    let header;
+    this.user$.subscribe((user) => (header = { username: user.username }));
+
     return this.httpHelper._fetchData(route, header, setResetPwdToken);
   }
 
-  onChangePassword(password: any) {
-    const resetPwdToken = this.authQuery.getAll()[0].resetPwdToken;
-    console.log('resetPwdToken', resetPwdToken);
+  changePassword(password: any) {
+    let resetPwdToken;
+    this.user$.subscribe((user) => (resetPwdToken = user.resetPwdToken));
+
     const route = `/auth/reset-password?token=${resetPwdToken}`;
-    return this.httpHelper._postData(route, { password: password }, {}, () => {
-      console.log('Change password done');
-    });
+
+    return this.httpHelper._postData(
+      route,
+      { password: password },
+      {},
+      () => {}
+    );
   }
 }

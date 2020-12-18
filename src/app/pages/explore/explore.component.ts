@@ -14,16 +14,10 @@ export class ExploreComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
-    private courseQuery: CourseQuery,
-    private authService: AuthService
+    private courseQuery: CourseQuery
   ) {}
 
   ngOnInit(): void {
-    // this.authService.getMe();
-    this.courseService.loadCourses();
-  }
-
-  getAllCourses() {
     this.courseService.loadCourses();
   }
 }

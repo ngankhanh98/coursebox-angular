@@ -1,6 +1,5 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../state/auth.service';
 
