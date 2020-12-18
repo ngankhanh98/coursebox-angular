@@ -1,42 +1,43 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpHelper } from 'app/@core/helpers/http.helper';
 import { Auth } from './auth';
 import { AuthQuery } from './auth.query';
-import { AuthStore } from './auth.store';
+import { AuthState, AuthStore } from './auth.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   token: string;
-  resetPwdToken: string;
-
+  userId$ = this.authQuery.selectFirst((entity) => entity.userId);
   constructor(
     private authStore: AuthStore,
     private httpHelper: HttpHelper,
     private authQuery: AuthQuery
   ) {}
 
-  onLogin({ username, password }) {
-    const route = '/auth/login';
-    const data = { username: username, password: password };
-    const storeToken = (res) => (this.token = res['accessToken']);
-
-    return this.httpHelper._postData(route, data, {}, storeToken);
-  }
-
-  onLogout() {
-    this.authStore.remove((entity) => entity.token === this.token);
-  }
-
-  onGetMe() {
+  private getMe(token) {
     const route = '/user/me';
-    const header = { 'access-token': this.token };
+    const header = { 'access-token': token };
     const addMyInfoToState = (response) => {
-      const res: Auth = { ...response, token: this.token };
+      const res: Auth = { ...response, token: token };
       this.authStore.add(res);
     };
 
     return this.httpHelper._fetchData(route, header, addMyInfoToState);
+  }
+
+  login({ username, password }) {
+    const route = '/auth/login';
+    const data = { username: username, password: password };
+
+    return this.httpHelper._postData(route, data, {}, (res) =>
+      this.getMe(res['accessToken'])
+    );
+  }
+
+  logout() {
+    this.userId$.subscribe((userId) =>
+      this.authStore.remove((entity) => entity.userId === userId)
+    );
   }
 
   onDeleteAccount() {
