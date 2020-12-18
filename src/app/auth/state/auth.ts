@@ -3,6 +3,6 @@ export interface Auth {
   fullname: string;
   userId: string;
 
-  token: string;
+  accessToken: string;
   resetPwdToken: string;
 }

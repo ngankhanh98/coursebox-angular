@@ -14,23 +14,30 @@ export class AuthService {
     private authQuery: AuthQuery
   ) {}
 
-  private getMe(token) {
-    const route = '/user/me';
-    const header = { 'access-token': token };
-    const addMyInfoToState = (response) => {
-      const res: Auth = { ...response, token: token };
-      this.authStore.add(res);
-    };
-
-    return this.httpHelper._fetchData(route, header, addMyInfoToState);
+  private ADD_STATE(user) {
+    this.authStore.add(user);
   }
+
+  private UPDATE_STATE({props}){
+    // this.authStore.update()
+  }
+  // private getMe(token) {
+  //   const route = '/user/me';
+  //   const header = { 'access-token': token };
+  //   const addMyInfoToState = (response) => {
+  //     const res: Auth = { ...response, token: token };
+  //     this.authStore.add(res);
+  //   };
+
+  //   return this.httpHelper._fetchData(route, header, addMyInfoToState);
+  // }
 
   login({ username, password }) {
     const route = '/auth/login';
     const data = { username: username, password: password };
 
     return this.httpHelper._postData(route, data, {}, (res) =>
-      this.getMe(res['accessToken'])
+      this.ADD_STATE(res)
     );
   }
 

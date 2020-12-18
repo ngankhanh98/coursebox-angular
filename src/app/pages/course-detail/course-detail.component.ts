@@ -13,7 +13,7 @@ import { CourseService } from '../state/course.service';
 export class CourseDetailComponent implements OnInit {
   courseId = this.route.snapshot.paramMap.get('courseId');
   userId = this.authQuery.getAll()[0].userId;
-  token = this.authQuery.getAll()[0].token;
+  token = this.authQuery.getAll()[0].accessToken;
 
   course$ = this.courseService.getCourseByCourseId(this.courseId);
   users$ = this.courseQuery.selectEntity((e) => e.courseId === this.courseId);
