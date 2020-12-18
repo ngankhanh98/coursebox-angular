@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpHelper } from 'app/@core/helpers/http.helper';
 import { Auth } from './auth';
+import { AuthQuery } from './auth.query';
 import { AuthStore } from './auth.store';
 
 @Injectable({ providedIn: 'root' })
@@ -9,7 +10,11 @@ export class AuthService {
   token: string;
   resetPwdToken: string;
 
-  constructor(private authStore: AuthStore, private httpHelper: HttpHelper) {}
+  constructor(
+    private authStore: AuthStore,
+    private httpHelper: HttpHelper,
+    private authQuery: AuthQuery
+  ) {}
 
   onLogin({ username, password }) {
     const route = '/auth/login';
@@ -42,20 +47,27 @@ export class AuthService {
 
   onRequestPassword(username) {
     const route = '/auth/forgot-password';
+
     const setResetPwdToken = (res) => {
-      this.resetPwdToken = res['resetPwdToken'];
+      const auth: Auth = {
+        ...this.authQuery.getAll()[0],
+        resetPwdToken: res['resetPwdToken'],
+      };
+      this.authStore.update((entity) => entity.userId === auth.userId, {
+        resetPwdToken: res['resetPwdToken'],
+      });
+      // this.authStore.add(auth);
     };
     const header = { username: username };
     return this.httpHelper._fetchData(route, header, setResetPwdToken);
   }
 
   onChangePassword(password: any) {
-    const route = `/auth/reset-password?token=${this.resetPwdToken}`;
-    return this.httpHelper._postData(
-      route,
-      { password: password },
-      {},
-      () => {}
-    );
+    const resetPwdToken = this.authQuery.getAll()[0].resetPwdToken;
+    console.log('resetPwdToken', resetPwdToken);
+    const route = `/auth/reset-password?token=${resetPwdToken}`;
+    return this.httpHelper._postData(route, { password: password }, {}, () => {
+      console.log('Change password done');
+    });
   }
 }

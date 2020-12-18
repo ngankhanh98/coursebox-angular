@@ -4,4 +4,5 @@ export interface Auth {
   userId: string;
 
   token: string;
+  resetPwdToken: string;
 }

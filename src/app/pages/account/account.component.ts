@@ -15,10 +15,9 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {}
 
   onRequestPassword(password) {
-    this.authState$.subscribe((user) => {
-      this.authService.onRequestPassword(user.username);
-      this.authService.onChangePassword(password);
-    });
+    const username = this.authQuery.getAll()[0].username;
+    this.authService.onRequestPassword(username);
+    this.authService.onChangePassword(password);
   }
 
   onDeleteAccount() {
