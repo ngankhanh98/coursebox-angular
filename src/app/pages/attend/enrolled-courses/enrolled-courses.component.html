@@ -3,6 +3,6 @@
         class="col-sm-6">
 
         <ngx-card [title]='course.title' [teacher]='course.teacher.username' [id]='course.courseId'
-            [courseId]='course.courseId | routeCustom'></ngx-card>
+            [courseId]='course.courseId | backRoute:2'></ngx-card>
     </div>
 </div>

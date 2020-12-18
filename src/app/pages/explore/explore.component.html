@@ -2,6 +2,6 @@
     <div *ngFor="let course of (courses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
         class="col-sm-6">
         <ngx-card [title]='course.title' [teacher]='course.teacher.username' [id]='course.courseId'
-            [courseId]='course.courseId | routeCustomDashboard'></ngx-card>
+            [courseId]='course.courseId | backRoute:1'></ngx-card>
     </div>
 </div>
