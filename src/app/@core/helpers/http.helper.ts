@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class HttpHelper {
-  url = 'http://localhost:3000/v1';
+  // url = 'http://localhost:3000/v1';
+  url = 'https://coursebox-server.herokuapp.com/v1'
 
   constructor(private httpClient: HttpClient) {}
 
