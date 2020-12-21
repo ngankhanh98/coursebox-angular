@@ -18,9 +18,9 @@ export class HttpsInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const myReq = req.clone({
+    const httpsReq = req.clone({
       url: this.baseUrl + req.url,
     });
-    return next.handle(myReq);
+    return next.handle(httpsReq);
   }
 }
