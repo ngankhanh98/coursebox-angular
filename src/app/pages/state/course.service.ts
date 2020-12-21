@@ -5,7 +5,6 @@ import { Auth } from 'app/auth/state/auth';
 import { AuthQuery } from 'app/auth/state/auth.query';
 import { Course } from './course';
 import { CourseStore } from './course.store';
-import { CreateCourseDto } from './dto/course.dto';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
@@ -25,16 +24,16 @@ export class CourseService {
   }
 
   public addCourse(title) {
+    const route = '/course';
+
     let teacher: Auth;
     this.authQuery.selectFirst().subscribe((result) => (teacher = result));
 
-    const course: CreateCourseDto = {
+    const course: Partial<Course> = {
       title: title,
       teacher: teacher,
     };
 
-    const route = '/course';
-    
     return this.httpClient.post<Course>(route, course).subscribe((course) =>
       this.courseStore.add({
         ...course,
@@ -45,22 +44,42 @@ export class CourseService {
   }
 
   getCourseByCourseId(courseId: string) {
-    return this.httpClient.get<Course>(`/course/${courseId}`);
+    const route = `/course/${courseId}`;
+    return this.httpClient.get<Course>(route);
   }
 
-  enroll(courseId: string, accessToken: string, callback: () => void) {
+  enroll(courseId: string, accessToken: string) {
     const route = `/user/enroll?roleId=member&courseId=${courseId}`;
     const header = { 'access-token': accessToken };
 
     return this.httpClient
       .post(route, {}, { headers: header })
-      .subscribe(callback);
+      .subscribe((res) => {
+        let member;
+        this.authQuery
+          .selectAll({ filterBy: (e) => e.userId === res['userId'] })
+          .subscribe((users) => (member = users));
+
+        this.courseStore.update((entity) => entity.courseId === courseId, {
+          users: [...member],
+        });
+      });
   }
 
-  unenroll(courseId: string, userId: string, callback: () => any) {
+  unenroll(courseId: string, userId: string) {
     const route = `/course/${courseId}/${userId}`;
 
-    return this.httpClient.delete(route).subscribe(callback);
+    return this.httpClient.delete(route).subscribe((res) => {
+      if (res['affected']) {
+        const remainUsers = this.courseStore
+          .getValue()
+          .entities[courseId].users.filter((user) => user.userId != userId);
+
+        this.courseStore.update((course) => course.courseId === courseId, {
+          users: remainUsers,
+        });
+      }
+    });
   }
 
   deleteCourse(courseId: string) {
