@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 /** Pass untouched request through to the next request handler. */
 @Injectable()
 export class HttpsInterceptor implements HttpInterceptor {
-  baseUrl = 'http://localhost:3000/v1';
+  // baseUrl = 'http://localhost:3000/v1';
+  baseUrl = 'https://coursebox-server.herokuapp.com/v1'
 
   intercept(
     req: HttpRequest<any>,

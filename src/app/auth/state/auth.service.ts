@@ -22,7 +22,6 @@ export class AuthService {
       .post<Auth>(route, { username: username, password: password })
       .subscribe((user) => {
         this.authStore.add(user);
-        console.log('Done add');
       });
   }
 
@@ -52,7 +51,7 @@ export class AuthService {
       (userId = e.userId), (username = e.username);
     });
 
-    let header = { username: username };
+    const header = { username: username };
 
     return this.httpClient.get(route, { headers: header }).subscribe((res) => {
       this.authStore.update((entity) => entity.userId === userId, {
