@@ -56,19 +56,10 @@ export class CourseDetailComponent implements OnInit {
   }
 
   unenroll() {
-    // const reloadMyEnrolledCourses = () => {
-    //   this.courseService.loadCourses();
-    // };
-
-    // return this.courseService.unenroll(
-    //   this.courseId,
-    //   this.userId,
-    //   reloadMyEnrolledCourses
-    // );
     return this.courseService.unenroll(this.courseId, this.userId)
   }
 
-  onDeleteCourse() {
+  deleteCourse() {
     return this.courseService.deleteCourse(this.courseId);
   }
 }

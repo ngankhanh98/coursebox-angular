@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'app/auth/state/auth.service';
 import { CourseQuery } from '../state/course.query';
 import { CourseService } from '../state/course.service';
 

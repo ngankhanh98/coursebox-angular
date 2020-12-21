@@ -34,21 +34,21 @@ export class CourseService {
       teacher: teacher,
     };
 
-    return this.httpClient.post<Course>(route, course).subscribe((course) =>
+    return this.httpClient.post<Course>(route, course).subscribe((res) =>
       this.courseStore.add({
-        ...course,
-        courseId: course['courseId'],
+        ...res,
+        courseId: res['courseId'],
         users: [],
       })
     );
   }
 
-  getCourseByCourseId(courseId: string) {
+  public getCourseByCourseId(courseId: string) {
     const route = `/course/${courseId}`;
     return this.httpClient.get<Course>(route);
   }
 
-  enroll(courseId: string, accessToken: string) {
+  public enroll(courseId: string, accessToken: string) {
     const route = `/user/enroll?roleId=member&courseId=${courseId}`;
     const header = { 'access-token': accessToken };
 
@@ -66,14 +66,14 @@ export class CourseService {
       });
   }
 
-  unenroll(courseId: string, userId: string) {
+  public unenroll(courseId: string, userId: string) {
     const route = `/course/${courseId}/${userId}`;
 
     return this.httpClient.delete(route).subscribe((res) => {
       if (res['affected']) {
         const remainUsers = this.courseStore
           .getValue()
-          .entities[courseId].users.filter((user) => user.userId != userId);
+          .entities[courseId].users.filter((user) => user.userId !== userId);
 
         this.courseStore.update((course) => course.courseId === courseId, {
           users: remainUsers,
@@ -82,7 +82,7 @@ export class CourseService {
     });
   }
 
-  deleteCourse(courseId: string) {
+  public deleteCourse(courseId: string) {
     const route = `/course/${courseId}`;
 
     return this.httpClient.delete(route).subscribe(() => {

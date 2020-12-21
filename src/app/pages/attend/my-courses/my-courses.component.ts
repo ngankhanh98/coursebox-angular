@@ -38,11 +38,11 @@ export class MyCoursesComponent implements OnInit {
   open() {
     this.dialogService
       .open(NewCourseFormComponent)
-      .onClose.subscribe((values) => values && this.courseService.addCourse(values));
-
-    this.courseService.loadCourses();
+      .onClose.subscribe(
+        (values) =>
+          values &&
+          this.courseService.addCourse(values) &&
+          this.courseService.loadCourses()
+      );
   }
-  // addCourse(title) {
-  //   this.courseService.addCourse(title);
-  // }
 }
