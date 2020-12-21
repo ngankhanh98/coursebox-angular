@@ -23,14 +23,14 @@ export class CourseService {
       .subscribe((courses) => this.courseStore.set(courses));
   }
 
-  public addCourse(title) {
+  public addCourse(values) {
     const route = '/course';
 
     let teacher: Auth;
     this.authQuery.selectFirst().subscribe((result) => (teacher = result));
 
     const course: Partial<Course> = {
-      title: title,
+      ...values,
       teacher: teacher,
     };
 
