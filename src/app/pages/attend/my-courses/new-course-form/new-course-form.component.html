@@ -1,0 +1,20 @@
+<nb-card >
+    <nb-card-header>Create course</nb-card-header>
+    <nb-card-body>
+        <form>
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" nbInput fullWidth placeholder="Title" #title />
+            </div>
+
+            <div>
+                <label for="description">Description: </label>
+                <textarea nbInput fullWidth placeholder="Full width" name="description" #description></textarea>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton status="danger" (click)="cancel()" class="appearance-filled size-medium status-danger shape-rectangle nb-transition">Cancel</button>
+        <button nbButton status="success" (click)="submit(title.value, description.value)" class="appearance-filled size-medium status-success shape-rectangle nb-transition">Submit</button>
+    </nb-card-footer>
+</nb-card>

@@ -1,4 +1,8 @@
 export interface Auth {
   username: string;
-  token: string;
+  fullname: string;
+  userId: string;
+
+  accessToken: string;
+  resetPwdToken: string;
 }

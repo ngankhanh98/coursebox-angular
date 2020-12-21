@@ -5,7 +5,7 @@ import { Auth } from './auth';
 export interface AuthState extends EntityState<Auth, string> {}
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'auth', idKey: 'username' })
+@StoreConfig({ name: 'auth', idKey: 'userId' })
 export class AuthStore extends EntityStore<AuthState> {
   constructor() {
     super();

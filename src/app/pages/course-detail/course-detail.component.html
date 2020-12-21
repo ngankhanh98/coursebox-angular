@@ -1,0 +1,40 @@
+<div *ngIf="course$ | async as course">
+
+    <ul>
+        <li>Title: {{course.title}}</li>
+        <li>Created at: {{course.createdAt}}</li>
+        <li>Teacher: {{course.teacher.username}}</li>
+        <div *ngIf="users$ | async as users">
+            <li>Members:
+                <ul *ngFor="let user of users.users">
+                    <li>{{user.userId}} - {{user.username}}</li>
+                </ul>
+            </li>
+        </div>
+    </ul>
+    <div class="d-flex">
+        <div *ngIf="(isMember$ | async).length">
+            <button nbButton status="danger"
+                class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
+                (click)="onUnenroll()">Unenroll me</button>
+
+        </div>
+
+        <div *ngIf="(isTeacher$ | async).length">
+            <button nbButton status="danger"
+                class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
+                (click)="onDeleteCourse()">Delete course</button>
+
+        </div>
+
+        <div *ngIf="!(isTeacher$ | async).length">
+            <div *ngIf="!(isMember$ | async).length">
+                <button type="submit" nbButton="" status="primary" size="medium" ng-reflect-status="primary"
+                    ng-reflect-size="medium" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+                    class="appearance-filled size-medium status-primary shape-rectangle nb-transition"
+                    (click)='onEnroll()'>
+                    Enroll me </button>
+            </div>
+        </div>
+    </div>
+</div>

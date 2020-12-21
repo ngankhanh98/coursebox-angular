@@ -8,7 +8,8 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
-import { AuthGuard } from './pages/guards/auth.guard';
+// import { AuthGuard } from './pages/guards/auth.guard';
+import { AuthGuard } from 'app/@shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -38,14 +39,14 @@ export const routes: Routes = [
       //   path: 'loginn',
       //   component: NbLoginComponent,
       // },
-      // {
-      //   path: 'logout',
-      //   component: NbLogoutComponent,
-      // },
-      // {
-      //   path: 'request-password',
-      //   component: NbRequestPasswordComponent,
-      // },
+      {
+        path: 'logout',
+        component: NbLogoutComponent,
+      },
+      {
+        path: 'request-password',
+        component: NbRequestPasswordComponent,
+      },
       // {
       //   path: 'reset-password',
       //   component: NbResetPasswordComponent,
@@ -54,7 +55,7 @@ export const routes: Routes = [
   },
 
   { path: '', redirectTo: '/dashboard/explore', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: '/dashboard/explore' },
 ];
 
 const config: ExtraOptions = {

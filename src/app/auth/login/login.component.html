@@ -1,5 +1,5 @@
 <h1>Welcome back.</h1>
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <div>
     <label for="username">Username:</label>
     <input type="text" nbInput fullWidth placeholder="Username" formControlName="username">

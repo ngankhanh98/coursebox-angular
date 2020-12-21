@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseQuery } from './state/course.query';
-import { CourseService } from './state/course.service';
+import { AuthService } from 'app/auth/state/auth.service';
+import { CourseQuery } from '../state/course.query';
+import { CourseService } from '../state/course.service';
 
 @Component({
   selector: 'ngx-explore',
@@ -8,7 +9,7 @@ import { CourseService } from './state/course.service';
   styleUrls: ['./explore.component.scss'],
 })
 export class ExploreComponent implements OnInit {
-  courses$ = this.courseQuery.allBrowseCourses$;
+  courses$ = this.courseQuery.selectAll();
   loading$ = this.courseQuery.selectLoading();
 
   constructor(
@@ -17,10 +18,6 @@ export class ExploreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllCourses();
-  }
-
-  getAllCourses() {
     this.courseService.loadCourses();
   }
 }

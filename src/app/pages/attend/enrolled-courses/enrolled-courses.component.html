@@ -1,1 +1,8 @@
-<p>enrolled-courses works!</p>
+<div class="d-flex flex-wrap">
+    <div *ngFor="let course of (enrolledCourses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
+        class="col-sm-6">
+
+        <ngx-card [title]='course.title' [teacher]='course.teacher.username' [id]='course.courseId'
+            [courseId]='course.courseId | backRoute:2'></ngx-card>
+    </div>
+</div>

@@ -1,1 +1,12 @@
-<p>my-courses works!</p>
+<button type="submit" nbButton="" status="primary" size="large" ng-reflect-status="primary" ng-reflect-size="large"
+    ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
+    class="appearance-filled size-large status-primary shape-rectangle nb-transition ml-3 mb-3"
+    (click)='open()'>
+    Create course </button>
+
+<div class="d-flex flex-wrap">
+    <div *ngFor="let course of (myCourses$ | async )" [nbSpinner]="(loading$ | async)" nbSpinnerStatus="danger"
+        class="col-sm-6">
+        <ngx-card [title]='course.title' [teacher]='course.teacher.username' [id]='course.courseId' [courseId]='course.courseId | backRoute:2'></ngx-card>
+    </div>
+</div>
