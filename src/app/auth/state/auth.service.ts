@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHelper } from 'app/@core/helpers/http.helper';
+// import { HttpHelper } from 'app/@core/helpers/http.helper';
 import { Auth } from './auth';
 import { AuthQuery } from './auth.query';
 import { AuthStore } from './auth.store';
@@ -11,8 +12,9 @@ export class AuthService {
 
   constructor(
     private authStore: AuthStore,
-    private httpHelper: HttpHelper,
-    private authQuery: AuthQuery
+    // private httpHelper: HttpHelper,
+    private authQuery: AuthQuery,
+    private httpClient: HttpClient
   ) {}
 
   private ADD_STATE(user) {
@@ -28,11 +30,14 @@ export class AuthService {
 
   login({ username, password }) {
     const route = '/auth/login';
-    const data = { username: username, password: password };
+    // const data = { username: username, password: password };
 
-    return this.httpHelper._postData(route, data, {}, (res) =>
-      this.ADD_STATE(res)
-    );
+    // return this.httpHelper._postData(route, data, {}, (res) =>
+    //   this.ADD_STATE(res)
+    // );
+    return this.httpClient
+      .post<Auth>(route, { username: username, password: password })
+      .subscribe((user) => this.authStore.add(user));
   }
 
   logout() {
@@ -47,7 +52,10 @@ export class AuthService {
       (user) => (header = { 'access-token': user.accessToken })
     );
 
-    return this.httpHelper._deleteData(route, header, () => this.logout());
+    // return this.httpHelper._deleteData(route, header, () => this.logout());
+    return this.httpClient
+      .delete(route, { headers: header })
+      .subscribe(() => this.logout());
   }
 
   requestPassword() {
@@ -65,7 +73,15 @@ export class AuthService {
     let header;
     this.user$.subscribe((user) => (header = { username: user.username }));
 
-    return this.httpHelper._fetchData(route, header, setResetPwdToken);
+    // return this.httpHelper._fetchData(route, header, setResetPwdToken);
+    return this.httpClient.get(route, { headers: header }).subscribe((res) => {
+      let userId: string;
+      this.user$.subscribe((user) => (userId = user.userId));
+      const resetPwdToken: Partial<Auth> = {
+        resetPwdToken: res['resetPwdToken'],
+      };
+      this.UPDATE_STATE(userId, resetPwdToken);
+    });
   }
 
   changePassword(password: any) {
@@ -74,11 +90,14 @@ export class AuthService {
 
     const route = `/auth/reset-password?token=${resetPwdToken}`;
 
-    return this.httpHelper._postData(
-      route,
-      { password: password },
-      {},
-      () => {}
-    );
+    // return this.httpHelper._postData(
+    //   route,
+    //   { password: password },
+    //   {},
+    //   () => {}
+    // );
+    return this.httpClient
+      .post(route, { password: password })
+      .subscribe(() => this.logout());
   }
 }

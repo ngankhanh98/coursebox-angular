@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpHelper } from 'app/@core/helpers';
 import { Auth } from 'app/auth/state/auth';
 import { AuthQuery } from 'app/auth/state/auth.query';
 import { Course } from './course';
@@ -13,15 +12,16 @@ export class CourseService {
   constructor(
     private courseStore: CourseStore,
     private authQuery: AuthQuery,
-    private httpHelper: HttpHelper,
-    private router: Router
+    private router: Router,
+    private httpClient: HttpClient
   ) {}
 
   public loadCourses() {
     const route = '/course';
-    const addCourseToState = (res) => this.courseStore.set(res);
 
-    return this.httpHelper._fetchData(route, {}, addCourseToState);
+    return this.httpClient
+      .get<Course[]>(route)
+      .subscribe((courses) => this.courseStore.set(courses));
   }
 
   public addCourse(title) {
@@ -34,38 +34,41 @@ export class CourseService {
     };
 
     const route = '/course';
-    const addNewCorseToState = (res) => {
-      const newCourse: Course = {
+    
+    return this.httpClient.post<Course>(route, course).subscribe((course) =>
+      this.courseStore.add({
         ...course,
-        courseId: res['courseId'],
+        courseId: course['courseId'],
         users: [],
-      };
-      this.courseStore.add(newCourse);
-    };
-    return this.httpHelper._postData(route, course, {}, addNewCorseToState);
+      })
+    );
   }
 
   getCourseByCourseId(courseId: string) {
-    return this.httpHelper._fetchData$(`/course/${courseId}`, {});
+    return this.httpClient.get<Course>(`/course/${courseId}`);
   }
 
   enroll(courseId: string, accessToken: string, callback: () => void) {
     const route = `/user/enroll?roleId=member&courseId=${courseId}`;
     const header = { 'access-token': accessToken };
-    return this.httpHelper._postData(route, {}, header, callback);
+
+    return this.httpClient
+      .post(route, {}, { headers: header })
+      .subscribe(callback);
   }
 
   unenroll(courseId: string, userId: string, callback: () => any) {
     const route = `/course/${courseId}/${userId}`;
-    return this.httpHelper._deleteData(route, {}, callback);
+
+    return this.httpClient.delete(route).subscribe(callback);
   }
 
   deleteCourse(courseId: string) {
     const route = `/course/${courseId}`;
-    const deleteCourseFromState = () => {
+
+    return this.httpClient.delete(route).subscribe(() => {
       this.courseStore.remove((e) => e['courseId'] === courseId);
       this.router.navigate(['/dashboard/explore']);
-    };
-    return this.httpHelper._deleteData(route, {}, deleteCourseFromState);
+    });
   }
 }
