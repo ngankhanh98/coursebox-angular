@@ -51,31 +51,15 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onEnroll() {
-    const reloadMyEnrolledCourses = () => {
-      this.courseService.loadCourses();
-    };
-
-    return this.courseService.enroll(
-      this.courseId,
-      this.token,
-      reloadMyEnrolledCourses
-    );
+  enroll() {
+    return this.courseService.enroll(this.courseId, this.token)
   }
 
-  onUnenroll() {
-    const reloadMyEnrolledCourses = () => {
-      this.courseService.loadCourses();
-    };
-
-    return this.courseService.unenroll(
-      this.courseId,
-      this.userId,
-      reloadMyEnrolledCourses
-    );
+  unenroll() {
+    return this.courseService.unenroll(this.courseId, this.userId)
   }
 
-  onDeleteCourse() {
+  deleteCourse() {
     return this.courseService.deleteCourse(this.courseId);
   }
 }

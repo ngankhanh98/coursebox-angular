@@ -16,14 +16,14 @@
         <div *ngIf="(isMember$ | async).length">
             <button nbButton status="danger"
                 class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
-                (click)="onUnenroll()">Unenroll me</button>
+                (click)="unenroll()">Unenroll me</button>
 
         </div>
 
         <div *ngIf="(isTeacher$ | async).length">
             <button nbButton status="danger"
                 class="appearance-filled size-medium status-danger shape-rectangle nb-transition"
-                (click)="onDeleteCourse()">Delete course</button>
+                (click)="deleteCourse()">Delete course</button>
 
         </div>
 
@@ -32,7 +32,7 @@
                 <button type="submit" nbButton="" status="primary" size="medium" ng-reflect-status="primary"
                     ng-reflect-size="medium" ng-reflect-disabled="true" aria-disabled="true" tabindex="-1"
                     class="appearance-filled size-medium status-primary shape-rectangle nb-transition"
-                    (click)='onEnroll()'>
+                    (click)='enroll()'>
                     Enroll me </button>
             </div>
         </div>

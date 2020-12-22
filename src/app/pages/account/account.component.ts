@@ -15,7 +15,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {}
 
   requestPassword(password) {
-    this.authService.requestPassword();
+    // this.authService.requestPassword();
     this.authService.changePassword(password);
   }
 

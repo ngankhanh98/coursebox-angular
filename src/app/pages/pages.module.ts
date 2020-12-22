@@ -8,12 +8,15 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 
 import { CommonModule } from '@angular/common';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { HttpHelper } from 'app/@core/helpers';
 
 @NgModule({
-  imports: [CommonModule, PagesRoutingModule, SharedModule, NbMenuModule, MiscellaneousModule],
+  imports: [
+    CommonModule,
+    PagesRoutingModule,
+    SharedModule,
+    NbMenuModule,
+    MiscellaneousModule,
+  ],
   declarations: [PagesComponent, CourseDetailComponent],
-  providers: [HttpHelper]
-
 })
 export class PagesModule {}

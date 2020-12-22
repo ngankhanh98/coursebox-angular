@@ -17,7 +17,7 @@ import {
   SeoService,
   StateService,
 } from './utils';
-import { HttpHelper } from './helpers';
+import { HttpsInterceptorProviders } from './interceptors';
 import { UserData } from './data/users';
 import { ElectricityData } from './data/electricity';
 import { SmartTableData } from './data/smart-table';
@@ -112,7 +112,7 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 export const NB_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
-  HttpHelper,
+  HttpsInterceptorProviders,
   ...NbAuthModule.forRoot({
     strategies: [
       NbDummyAuthStrategy.setup({
