@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Auth } from './auth';
 import { AuthQuery } from './auth.query';
 import { AuthStore } from './auth.store';
@@ -12,7 +13,8 @@ export class AuthService {
   constructor(
     private authStore: AuthStore,
     private authQuery: AuthQuery,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) {}
 
   public login({ username, password }) {
@@ -22,6 +24,7 @@ export class AuthService {
       .post<Auth>(route, { username: username, password: password })
       .subscribe((user) => {
         this.authStore.add(user);
+        this.router.navigate(['/dashboard/explore']);
       });
   }
 
