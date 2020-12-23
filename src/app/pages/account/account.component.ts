@@ -9,13 +9,13 @@ import { AuthService } from 'app/auth/state/auth.service';
 })
 export class AccountComponent implements OnInit {
   authState$ = this.authQuery.selectFirst();
-
+  response$ = this.authQuery.select('success');
   constructor(private authQuery: AuthQuery, private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   requestPassword(password) {
-    // this.authService.requestPassword();
     this.authService.changePassword(password);
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ChangePasswordFormComponent implements OnInit {
   @Output() changePasswordReq = new EventEmitter<string>();
+  @Input() response;
+  loading = false;
 
   changePasswordForm = new FormGroup({
     password: new FormControl(''),
@@ -18,6 +20,9 @@ export class ChangePasswordFormComponent implements OnInit {
   ngOnInit(): void {}
 
   onChangePassword() {
+    this.loading = true;
+    this.response = false;
+
     const { password, passwordagain } = this.changePasswordForm.value;
     if (password === passwordagain) this.changePasswordReq.emit(password);
   }
