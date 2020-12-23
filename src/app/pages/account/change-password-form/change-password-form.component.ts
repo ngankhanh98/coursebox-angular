@@ -10,7 +10,7 @@ export class ChangePasswordFormComponent implements OnInit {
   @Output() changePasswordReq = new EventEmitter<string>();
   @Input() response;
   loading = false;
-
+  error: string;
   changePasswordForm = new FormGroup({
     password: new FormControl(''),
     passwordagain: new FormControl(''),
@@ -22,8 +22,14 @@ export class ChangePasswordFormComponent implements OnInit {
   onChangePassword() {
     this.loading = true;
     this.response = false;
+    this.error = null;
 
     const { password, passwordagain } = this.changePasswordForm.value;
-    if (password === passwordagain) this.changePasswordReq.emit(password);
+    if (password && password === passwordagain)
+      this.changePasswordReq.emit(password);
+    else {
+      this.error = 'Error occured';
+      this.loading = false;
+    }
   }
 }
