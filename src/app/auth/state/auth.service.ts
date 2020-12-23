@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Auth } from './auth';
 import { AuthQuery } from './auth.query';
 import { AuthStore } from './auth.store';
@@ -12,17 +14,24 @@ export class AuthService {
   constructor(
     private authStore: AuthStore,
     private authQuery: AuthQuery,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) {}
 
   public login({ username, password }) {
     const route = '/auth/login';
-
+    this.authStore.setError(null);
     return this.httpClient
       .post<Auth>(route, { username: username, password: password })
-      .subscribe((user) => {
-        this.authStore.add(user);
-      });
+      .subscribe(
+        (user) => {
+          this.authStore.add(user);
+          this.router.navigate(['/dashboard/explore']);
+        },
+        (error) => {
+          this.authStore.setError(error.error);
+        }
+      );
   }
 
   logout() {
@@ -61,13 +70,30 @@ export class AuthService {
   }
 
   changePassword(password: any) {
+    this.authStore.update({ success: false });
     this.requestPassword();
-    this.authQuery.selectFirst().subscribe((user) => {
+    return this.authQuery.selectFirst().subscribe((user) => {
       const route = `/auth/reset-password?token=${user.resetPwdToken}`;
 
       return this.httpClient
         .post(route, { password: password })
-        .subscribe(() => this.logout());
+        .subscribe(() => this.authStore.update({ success: true }));
     });
   }
+
+  // changePassword(password: any) {
+  //   this.requestPassword();
+  //   let resetPwdToken;
+  //   this.authQuery
+  //     .selectFirst()
+  //     .subscribe((user) => (resetPwdToken = user.resetPwdToken));
+
+  //   const route = `/auth/reset-password?token=${resetPwdToken}`;
+  //   return this.httpClient.post(route, { password: password });
+  //   // this.authQuery.selectFirst().subscribe((user) => {
+  //   //   const route = `/auth/reset-password?token=${user.resetPwdToken}`;
+
+  //   //   return this.httpClient.post(route, { password: password });
+  //   // });
+  // }
 }

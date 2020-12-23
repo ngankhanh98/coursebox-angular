@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbInputModule,
+  NbSpinnerModule,
+} from '@nebular/theme';
 import { SharedModule } from 'app/@shared/shared.module';
-
 
 @NgModule({
   imports: [
@@ -14,9 +18,17 @@ import { SharedModule } from 'app/@shared/shared.module';
     NbCardModule,
     NbButtonModule,
     NbInputModule,
+    NbSpinnerModule,
+    CommonModule,
+    SharedModule,
+    NbInputModule,
+    NbCardModule,
+    NbButtonModule,
+    NbSpinnerModule,
+    ReactiveFormsModule,
   ],
   exports: [],
-//   declarations: [ChangePasswordFormComponent],
+  //   declarations: [ChangePasswordFormComponent],
   providers: [],
 })
-export class ChangePasswordFormModule {}
+class ChangePasswordFormModule {}
