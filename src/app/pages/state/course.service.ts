@@ -55,13 +55,17 @@ export class CourseService {
     return this.httpClient
       .post(route, {}, { headers: header })
       .subscribe((res) => {
+        // get own user
         let member;
         this.authQuery
           .selectAll({ filterBy: (e) => e.userId === res['userId'] })
           .subscribe((users) => (member = users));
 
+        // get enrollment from a course
+        const enrollment = this.courseStore.getValue().entities[courseId].users;
+
         this.courseStore.update((entity) => entity.courseId === courseId, {
-          users: [...member],
+          users: [...enrollment, ...member],
         });
       });
   }

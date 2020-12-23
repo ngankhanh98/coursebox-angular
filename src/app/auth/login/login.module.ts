@@ -9,6 +9,7 @@ import {
   NbInputModule,
   NbRadioModule,
   NbSelectModule,
+  NbSpinnerModule,
   NbUserModule,
 } from "@nebular/theme";
 
@@ -35,6 +36,7 @@ import { CommonModule } from '@angular/common';
     NbSelectModule,
     NbIconModule,
     ngFormsModule,
+    NbSpinnerModule,
     ReactiveFormsModule,
   ],
   declarations: [LoginComponent],
